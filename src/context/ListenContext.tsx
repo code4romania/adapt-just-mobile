@@ -5,8 +5,11 @@ import React, {
   useCallback,
   createContext,
 } from 'react';
+import {
+  AppState,
+  Platform,
+} from 'react-native';
 import Tts from 'react-native-tts';
-import { Platform } from 'react-native';
 
 import useWithReducer from '~/hooks/use-with-reducer';
 
@@ -43,12 +46,40 @@ export const ListenProvider = ({
   const textRef = useRef([]);
   const positionRef = useRef(-1);
   const currentIndex = useRef(0);
+  const isListenRef = useRef(false);
+  const appStateRef = useRef(AppState.currentState);
 
   const [state, setState] = useWithReducer(initialState);
 
   useEffect(() => {
     bootstrap();
   }, []);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener(
+      'change',
+      handleAppStateChange
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    isListenRef.current = state.isListen;
+  }, [state.isListen]);
+
+  const handleAppStateChange = async (nextAppState) => {
+    if (
+      nextAppState.match(/inactive|background/) &&
+      isListenRef.current
+    ) {
+      await handleStop();
+    }
+
+    appStateRef.current = nextAppState;
+  };
 
   const bootstrap = useCallback(
     async () => {
@@ -120,45 +151,14 @@ export const ListenProvider = ({
     setState({ isListen: true });
   };
 
-  const handleProgress = (event) => {
-    // let { length } = event;
-
-    // if (positionRef.current === -1) {
-    //   positionRef.current = 0;
-    // }
-
-    // let position = positionRef.current;
-    // currentIndex.current += length;
-    // if (positionRef.current <= textRef.current.length) {
-    //   currentIndex.current += 1;
-    // }
-
-    // if (currentIndex.current > textRef.current?.[position]?.length) {
-    //   currentIndex.current = 0;
-    //   position++;
-    // }
-
-    // if (position <= textRef.current.length) {
-    //   positionRef.current = position;
-    // }
-
-    // const progress = {
-    //   length,
-    //   position: positionRef.current,
-    // };
-
-    // setState({ progress });
-  };
+  const handleProgress = (event) => { };
 
   const handleFinish = (event) => {
     textRef.current = [];
     positionRef.current = -1;
     currentIndex.current = 0;
 
-    setState({
-      progress,
-      isListen: false,
-    });
+    setState({ isListen: false });
   };
 
   const handleCancel = (event) => {
@@ -176,7 +176,8 @@ export const ListenProvider = ({
 
     textRef.current = text;
 
-    if (state.isListen) {
+    // if (state.isListen) {
+    if (isListenRef.current) {
       await handleStop();
       return;
     }

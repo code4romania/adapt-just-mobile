@@ -1,6 +1,9 @@
 import React, {
   useMemo,
+  useState,
+  useEffect,
   useContext,
+  useCallback,
 } from 'react';
 import {
   View,
@@ -10,7 +13,11 @@ import {
 import { ScaledSheet } from 'react-native-size-matters/extend';
 
 import style from '~/components/complaint/style';
+import { getDistance } from '~/utils/geolocation';
+import useGeolocation from '~/hooks/use-geolocation';
+import useLoadingView from '~/hooks/use-loading-view';
 import { ComplaintContext } from '~/context/ComplaintContext';
+import { LocationsContext } from '~/context/LocationsContext';
 
 import FormStepper from '~/components/shared/form/FormStepper';
 import ScreenTitle from '~/components/shared/screens/ScreenTitle';
@@ -33,6 +40,10 @@ const ComplaintLocationScreen = ({
   navigation,
 }) => {
   const {
+    locations: allLocations,
+  } = useContext(LocationsContext);
+
+  const {
     type,
     steps,
     victim,
@@ -40,6 +51,14 @@ const ComplaintLocationScreen = ({
     locationName,
     setLocation,
   } = useContext(ComplaintContext);
+
+  const {
+    getLocation,
+  } = useGeolocation();
+
+  const [loading, setLoading] = useState(true);
+
+  useLoadingView(loading);
 
   const title = useMemo(() => {
     let text = listenText[1];
@@ -63,6 +82,59 @@ const ComplaintLocationScreen = ({
 
     return text;
   }, [title, location]);
+
+  useEffect(() => {
+    if (location) {
+      setLoading(false);
+      return;
+    }
+
+    getLocationAsync();
+  }, []);
+
+  const getLocationAsync = useCallback(async () => {
+    try {
+      const position = await getLocation();
+      if (!position) {
+        return;
+      }
+
+      const {
+        latitude,
+        longitude,
+      } = position.coords;
+
+      let min = 100000;
+      let currentLocation = null;
+
+      allLocations.forEach((item) => {
+        const { lat, lng } = item;
+
+        if (!lat || !lng) {
+          return;
+        }
+
+        const distance = getDistance(
+          latitude,
+          longitude,
+          lat,
+          lng,
+        );
+
+        if (distance < min && distance < 3) {
+          min = distance;
+          currentLocation = item;
+        }
+      });
+
+      if (currentLocation) {
+        setLocation(currentLocation);
+      }
+    } catch (error) {
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   const handleRecording = (result = '') => {
     const name = result.toUpperCase().trim();

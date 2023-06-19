@@ -60,6 +60,7 @@ const ComplaintPreviewScreen = ({
     victim,
     details,
     uploads,
+    location,
     locationName,
     agenciesText,
     submit,
@@ -92,16 +93,34 @@ const ComplaintPreviewScreen = ({
     text[0] = `${text[0].replace(':step', step).replace(':steps', steps)}`;
     text[2] = `${text[2]} ${agenciesText}`;
 
-    text.push(`Mă numesc ${name}, `);
-    if (locationName) {
-      text.push(`mă aflu în ${locationName}, `);
-    }
-
-    text.push('și declar că:');
+    text.push(`Mă numesc ${name} `);
 
     if (victim === 'other') {
+      let victimText = 'și declar că';
+      if (locationName) {
+        victimText = `${victimText} în ${locationName}`;
+      }
+
+      victimText = `${victimText} s-au întâmplat următoarele`;
+
+      text.push(victimText);
       text.push(reason);
     } else {
+      let victimText = '';
+
+      if (location?.city_label || locationName) {
+        victimText = ', mă aflu ';
+        if (location?.city_label) {
+          victimText = `${victimText} în ${location.city_label}`;
+        }
+        if (locationName) {
+          victimText = `${victimText} în ${locationName}`;
+        }
+      }
+
+      victimText = `${victimText} și declar că:`;
+      text.push(victimText);
+
       details.forEach((detail) => {
         let dText = getListenDetailsText(detail);
 
@@ -155,9 +174,6 @@ const ComplaintPreviewScreen = ({
       await AsyncStorage.removeItem('@complaint');
       navigation.navigate('ComplaintSuccess');
     } catch (error) {
-      // console.log('submit complaint error');
-      // console.log(error);
-
       Alert.alert(
         'Eroare'.toUpperCase(),
         'A apărut o eroare la trimiterea plângerii. Te rugăm să încerci mai târziu.'.toUpperCase(),
@@ -205,13 +221,38 @@ const ComplaintPreviewScreen = ({
 
           <View style={styles.summary}>
             <Text style={styles.summaryText}>
-              Mă numesc <Text style={styles.summaryHighlight}>{name}</Text>,
-              {!!locationName && (
+              Mă numesc <Text style={styles.summaryHighlight}>{name}</Text>
+              {victim === 'other' && (
                 <>
-                  {'mă aflu în '}<Text style={styles.summaryTextBold}>{locationName}</Text>
+                  {' și declar că'}
+                  {!!locationName && (
+                    <>
+                      {' în '}
+                      <Text style={styles.summaryTextBold}>{locationName}</Text>
+                    </>
+                  )}
+                  {' s-au întâmplat următoarele'}
                 </>
               )}
-              &nbsp;și declar că:
+
+              {victim !== 'other' && (
+                <>
+                  {(!!location?.city_label || !!locationName) && ', mă aflu'}
+                  {!!location?.city_label && (
+                    <>
+                      {' în '}
+                      <Text style={styles.summaryTextBold}>{location.city_label}</Text>
+                    </>
+                  )}
+                  {!!locationName && (
+                    <>
+                      {' în '}
+                      <Text style={styles.summaryTextBold}>{locationName}</Text>
+                    </>
+                  )}
+                  {' și declar că:'}
+                </>
+              )}
             </Text>
 
             <View style={styles.listContainer}>

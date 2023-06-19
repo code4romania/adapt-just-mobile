@@ -1,7 +1,6 @@
 import React, {
   useRef,
   useMemo,
-  useEffect,
   useContext,
 } from 'react';
 import {
@@ -14,10 +13,8 @@ import {
   ScaledSheet,
 } from 'react-native-size-matters/extend';
 
-import useListScroll from '~/hooks/use-list-scroll';
-import { LocationsContext } from '~/context/LocationsContext';
-
 import ComplaintLocation from './ComplaintLocation';
+import { LocationsContext } from '~/context/LocationsContext';
 
 const itemHeight = vs(60);
 
@@ -47,20 +44,25 @@ const ComplaintLocations = ({
   screen = 'ComplaintLocation',
 }) => {
   const list = useRef(null);
-  const scrollToIndex = useListScroll(list);
 
   const {
     locations: allLocations,
   } = useContext(LocationsContext);
 
   const locations = useMemo(() => {
+    let loc = [...allLocations];
+    if (location?.id) {
+      loc = loc.filter(l => l.id !== location.id);
+      loc.unshift(location);
+    }
+
     if (!search) {
-      return allLocations;
+      return loc;
     }
 
     const s = search.trim().toLowerCase();
 
-    return allLocations.filter(
+    return loc.filter(
       l => {
         const name = `${l.name} ${l.city_name}`.toLowerCase();
         const label = `${l.label}, ${l.city_label}`.toLowerCase();
@@ -68,21 +70,7 @@ const ComplaintLocations = ({
         return name.includes(s) || label.includes(s);
       }
     );
-  }, [search]);
-
-  const locationIndex = useMemo(() => {
-    return locations.findIndex(
-      l => l.id === location?.id
-    ) || 0;
-  }, []);
-
-  useEffect(() => {
-    requestAnimationFrame(() => {
-      if (location && locationIndex > 5) {
-        scrollToIndex(locationIndex);
-      }
-    });
-  }, []);
+  }, [search, location]);
 
   const getItemLayout = (_, index) => ({
     index,

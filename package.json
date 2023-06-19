@@ -1,5 +1,6 @@
 {
-  "name": "AdaptJust",
+  "name": "ceasulbun",
+  "displayName": "Ceasul Bun",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -31,8 +32,8 @@
     "react-native": "0.71.6",
     "react-native-document-picker": "^9.0.1",
     "react-native-file-viewer": "^2.1.5",
+    "react-native-geolocation-service": "^5.3.1",
     "react-native-gesture-handler": "^2.9.0",
-    "react-native-heroicons": "^3.2.0",
     "react-native-image-picker": "^5.4.0",
     "react-native-image-viewing": "^0.2.2",
     "react-native-linear-gradient": "^2.6.2",

@@ -1,20 +1,19 @@
 import axios from 'axios';
 import { API_URL } from '@env';
 
-const createClient = (config) => {
+const createClient = () => {
   return axios.create({
     baseURL: API_URL,
     headers: {
       'dataType': `json`,
       'Accept': `application/json`,
       'Content-Type': `multipart/form-data`,
-      // 'Content-Type': `application/json`,
     },
   });
 }
 
-const request = async (options, config) => {
-  const client = createClient(config);
+const request = async (options) => {
+  const client = createClient();
 
   const onSuccess = ({ data }) => data;
 
