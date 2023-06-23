@@ -12,11 +12,14 @@ import { useNavigation } from '@react-navigation/native';
 
 import { prevIcon } from '~/assets/images';
 
-const HomeButton = () => {
+const HomeButton = ({
+  screen = 'Home',
+  screenName = 'Ecran principal',
+}) => {
   const navigation = useNavigation();
 
   const navigateHome = () => {
-    navigation.navigate('Home');
+    navigation.navigate(screen);
   };
 
   return (
@@ -31,7 +34,7 @@ const HomeButton = () => {
       />
 
       <Text style={styles.text}>
-        Ecran principal
+        {screenName}
       </Text>
     </TouchableOpacity>
   );

@@ -36,6 +36,12 @@ import complaintMoveIcon from './complaint-move-icon.svg';
 import complaintOtherIcon from './complaint-other-icon.svg';
 import complaintEvaluationIcon from './complaint-evaluation-icon.svg';
 
+// resources
+import phoneIcon from './phone-icon.svg';
+import lawyerIcon from './lawyer-icon.svg';
+import phoneNumberIcon from './phone_number-icon.svg';
+import organisationIcon from './organisation-icon.svg';
+
 export {
   prevIcon,
   nextIcon,
@@ -69,6 +75,11 @@ export {
   complaintMoveIcon,
   complaintOtherIcon,
   complaintEvaluationIcon,
+
+  phoneIcon,
+  lawyerIcon,
+  phoneNumberIcon,
+  organisationIcon,
 };
 
 export const gradient = require('./gradient.png');

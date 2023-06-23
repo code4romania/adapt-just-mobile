@@ -28,6 +28,10 @@ const HomeMenu = ({
     // navigation.navigate('Articles');
   };
 
+  const navigateResources = () => {
+    navigation.navigate('Resources');
+  };
+
   return (
     <View>
       <HomeMenuItem
@@ -47,6 +51,7 @@ const HomeMenu = ({
         position={3}
         icon={handShakeIcon}
         title="Resurse de sprijin"
+        onPress={navigateResources}
       />
       <HomeMenuItem
         position={4}
