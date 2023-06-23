@@ -25,7 +25,7 @@ const HomeMenu = ({
   // };
 
   const navigateArticles = () => {
-    // navigation.navigate('Articles');
+    navigation.navigate('Articles');
   };
 
   const navigateResources = () => {

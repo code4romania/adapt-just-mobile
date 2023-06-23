@@ -10,7 +10,7 @@ import {
 } from 'react-native-size-matters/extend';
 import { SvgXml } from 'react-native-svg';
 
-import { arrowRightIcon } from '~/assets/images';
+import ArrowRightIcon from '~/components/shared/icons/ArrowRightIcon';
 
 const ResourceButton = ({
   title = '',
@@ -46,10 +46,7 @@ const ResourceButton = ({
           </View>
         </View>
 
-        <SvgXml
-          height={vs(20)}
-          xml={arrowRightIcon}
-        />
+        <ArrowRightIcon />
       </>
     </TouchableHighlight>
   );
@@ -63,7 +60,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginBottom: '20@vs',
-    borderRadius: '6@msr',
+    borderRadius: '8@msr',
     borderColor: '#FBBF24',
     paddingVertical: '18@vs',
     paddingHorizontal: '25@s',

@@ -16,13 +16,11 @@ import {
 } from 'react-native-size-matters/extend';
 import { SvgXml } from 'react-native-svg';
 
-import {
-  locationIcon,
-  arrowRightIcon,
-} from '~/assets/images';
+import { locationIcon } from '~/assets/images';
 import { ComplaintContext } from '~/context/ComplaintContext';
 
 import ComplaintLocationsModal from './ComplaintLocationsModal';
+import ArrowRightIcon from '~/components/shared/icons/ArrowRightIcon';
 
 const hitSlop = {
   top: 12,
@@ -109,10 +107,7 @@ const ComplaintLocationButton = ({
           </View>
 
           {!showClear && (
-            <SvgXml
-              height={vs(20)}
-              xml={arrowRightIcon}
-            />
+            <ArrowRightIcon />
           )}
 
           {showClear && (
@@ -163,8 +158,6 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
   },
   image: {
-    // width: '28@msr',
-    // height: '28@msr',
     marginRight: '13@s',
   },
   text: {

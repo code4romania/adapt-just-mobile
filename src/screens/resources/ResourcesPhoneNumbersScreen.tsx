@@ -29,6 +29,8 @@ const listenText = [
   'Apasă pe numărul de telefon ca să suni:',
 ];
 
+const emptyText = 'Nu s-au găsit numere de telefon';
+
 const ResourcesPhoneNumbersScreen = () => {
   const [state, setState] = useWithReducer(initialState);
 
@@ -41,7 +43,7 @@ const ResourcesPhoneNumbersScreen = () => {
     const showNoResults = !state.loading && !hasPhones;
 
     if (showNoResults) {
-      text.push('Nu există numere de telefon');
+      text.push(emptyText);
     }
 
     if (hasPhones) {
@@ -105,6 +107,7 @@ const ResourcesPhoneNumbersScreen = () => {
 
         <View style={styles.resourcesContainer}>
           <ResourcesPhoneNumbers
+            emptyText={emptyText}
             loading={state.loading}
             phoneNumbers={state.phoneNumbers}
           />

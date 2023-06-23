@@ -4,13 +4,9 @@ import {
   Text,
   TouchableHighlight,
 } from 'react-native';
-import {
-  vs,
-  ScaledSheet,
-} from 'react-native-size-matters/extend';
-import { SvgXml } from 'react-native-svg';
+import { ScaledSheet } from 'react-native-size-matters/extend';
 
-import { arrowRightIcon } from '~/assets/images';
+import ArrowRightIcon from '~/components/shared/icons/ArrowRightIcon';
 
 const ResourcesLawyer = ({
   lawyer,
@@ -35,10 +31,7 @@ const ResourcesLawyer = ({
           </Text>
         </View>
 
-        <SvgXml
-          height={vs(20)}
-          xml={arrowRightIcon}
-        />
+        <ArrowRightIcon />
       </>
     </TouchableHighlight>
   );
@@ -54,7 +47,7 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginBottom: '20@vs',
-    borderRadius: '6@msr',
+    borderRadius: '8@msr',
     borderColor: '#FBBF24',
     paddingVertical: '24@vs',
     backgroundColor: '#FFFFFF',

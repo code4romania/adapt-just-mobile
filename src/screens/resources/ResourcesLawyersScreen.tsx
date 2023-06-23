@@ -27,6 +27,8 @@ const initialState = {
   loading: true,
 };
 
+const emptyText = 'Nu s-au găsit sfaturi avocat';
+
 const ResourcesLawyersScreen = ({
   navigation,
 }) => {
@@ -41,7 +43,7 @@ const ResourcesLawyersScreen = ({
     const showNoResults = !state.loading && !hasLawyers;
 
     if (showNoResults) {
-      text.push('Nu există sfaturi avocat');
+      text.push(emptyText);
     }
 
     if (hasLawyers) {
@@ -97,6 +99,7 @@ const ResourcesLawyersScreen = ({
 
         <View style={styles.resourcesContainer}>
           <ResourcesLawyers
+            emptyText={emptyText}
             loading={state.loading}
             navigation={navigation}
             lawyers={state.lawyers}

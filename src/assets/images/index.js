@@ -14,6 +14,7 @@ import searchIcon from './search-icon.svg';
 import returnIcon from './return-icon.svg';
 import locationIcon from './location-icon.svg';
 import microphoneIcon from './microphone-icon.svg';
+import chevronDownIcon from './chevron-down-icon.svg'
 
 // complaint options
 import beatenIcon from './beaten-icon.svg';
@@ -57,6 +58,7 @@ export {
   arrowRightIcon,
   attachmentIcon,
   microphoneIcon,
+  chevronDownIcon,
 
   beatenIcon,
   abusedIcon,

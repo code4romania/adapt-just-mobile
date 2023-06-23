@@ -6,8 +6,10 @@ import {
 
 import { LocationsProvider } from '~/context/LocationsContext';
 
-import ComplaintStack from './ComplaintStack';
 import HomeScreen from '~/screens/HomeScreen';
+import ComplaintStack from './ComplaintStack';
+
+import ArticleScreen from '~/screens/articles/ArticleScreen';
 import ArticlesScreen from '~/screens/articles/ArticlesScreen';
 
 import ResourcesScreen from '~/screens/resources/ResourcesScreen';
@@ -41,9 +43,14 @@ const AppStack = () => {
           name="Complaint"
           component={ComplaintStack}
         />
+
         <Stack.Screen
           name="Articles"
           component={ArticlesScreen}
+        />
+        <Stack.Screen
+          name="Article"
+          component={ArticleScreen}
         />
 
         <Stack.Screen

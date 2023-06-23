@@ -4,31 +4,19 @@ import React, {
 } from 'react';
 import {
   View,
-  Text,
   ScrollView,
-  useWindowDimensions,
 } from 'react-native';
-import RenderHtml, {
-  defaultSystemFonts,
-} from 'react-native-render-html';
-import {
-  s,
-  ms,
-  ScaledSheet,
-} from 'react-native-size-matters/extend';
+import { ScaledSheet } from 'react-native-size-matters/extend';
 
+import { getHtmlToArray } from '~/utils/html';
 import useWithReducer from '~/hooks/use-with-reducer';
 import useLoadingView from '~/hooks/use-loading-view';
 import { getResource } from '~/services/resources-service';
 
+import ListEmpty from '~/components/shared/screens/ListEmpty';
 import HomeButton from '~/components/shared/buttons/HomeButton';
+import HtmlContent from '~/components/shared/screens/HtmlContent';
 import ScreenContainer from '~/components/shared/screens/ScreenContainer';
-
-const systemFonts = [
-  ...defaultSystemFonts,
-  'EncodeSans-Bold',
-  'EncodeSans-Regular',
-];
 
 const listenText = [
   'Sfaturi avocat',
@@ -39,37 +27,34 @@ const initialState = {
   loading: true,
 };
 
+const emptyText = 'Nu s-a găsit sfatul avocatului';
+
 const ResourcesLawyerScreen = ({
   route,
 }) => {
   const { lawyerId } = route.params;
   const [state, setState] = useWithReducer(initialState);
 
-  const { width } = useWindowDimensions();
-  const contentWidth = width - s(48);
-
   useLoadingView(state.loading);
 
   const hasLawyer = !!state.lawyer;
   const showNoResults = !state.loading && !hasLawyer;
 
+  const showContent = !!state.lawyer?.content || false;
+
   const lText = useMemo(() => {
     let text = [...listenText];
 
     if (showNoResults) {
-      text.push('Nu s-a încărcat sfatul avocatului');
+      text.push(emptyText);
     }
 
     if (hasLawyer && state.lawyer?.content) {
-      // add a period after every closing tag
-      let content = state.lawyer.content.replace(/<\/[^>]+>/g, '$&.');
-
-      // remove all html tags and spaces &nbsp;
-      content = content.replace(/(<([^>]+)>)/ig, '').replace(/&nbsp;/g, '');
+      const { content } = state.lawyer;
       
       text = [
         ...text,
-        content.split('.').filter((c) => c !== ''),
+        ...getHtmlToArray(content),
       ];
     }
 
@@ -113,26 +98,17 @@ const ResourcesLawyerScreen = ({
         contentContainerStyle={styles.container}
       >
         {showNoResults && (
-          <View style={styles.noResults}>
-            <Text style={styles.noResultsText}>
-              Nu s-a încărcat sfatul avocatului
-            </Text>
-          </View>
+          <ListEmpty
+            text={emptyText}
+          />
         )}
 
-        {hasLawyer && (
-          <>
-            {!!state.lawyer.content && (
-              <View style={styles.content}>
-                <RenderHtml
-                  tagsStyles={tagStyles}
-                  systemFonts={systemFonts}
-                  contentWidth={contentWidth}
-                  source={{ html: state.lawyer.content }}
-                />
-              </View>
-            )}
-          </>
+        {showContent && (
+          <View style={styles.content}>
+            <HtmlContent
+              html={state.lawyer.content}
+            />
+          </View>
         )}
       </ScrollView>
     </ScreenContainer>
@@ -140,63 +116,6 @@ const ResourcesLawyerScreen = ({
 };
 
 export default ResourcesLawyerScreen;
-
-const tagStyles = {
-  h1: {
-    color: '#111827',
-    fontSize: ms(24),
-    textTransform: 'uppercase',
-    fontFamily: 'EncodeSans-Bold',
-  },
-  h2: {
-    color: '#111827',
-    fontSize: ms(21),
-    textTransform: 'uppercase',
-    fontFamily: 'EncodeSans-Bold',
-  },
-  h3: {
-    color: '#111827',
-    fontSize: ms(18),
-    textTransform: 'uppercase',
-    fontFamily: 'EncodeSans-Bold',
-  },
-  h4: {
-    color: '#111827',
-    fontSize: ms(16),
-    textTransform: 'uppercase',
-    fontFamily: 'EncodeSans-Bold',
-  },
-  h5: {
-    color: '#111827',
-    fontSize: ms(14),
-    textTransform: 'uppercase',
-    fontFamily: 'EncodeSans-Bold',
-  },
-  h6: {
-    color: '#111827',
-    fontSize: ms(12),
-    textTransform: 'uppercase',
-    fontFamily: 'EncodeSans-Bold',
-  },
-  p: {
-    color: '#111827',
-    fontSize: ms(19),
-    textTransform: 'uppercase',
-    fontFamily: 'EncodeSans-Regular',
-  },
-  img: {
-    overflow: 'hidden',
-    borderRadius: ms(8),
-
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowRadius: 6,
-    shadowColor: '#000',
-    shadowOpacity: 0.05,
-  },
-};
 
 const styles = ScaledSheet.create({
   container: {
@@ -220,17 +139,5 @@ const styles = ScaledSheet.create({
     textTransform: 'uppercase',
     fontVariant: ['small-caps'],
     fontFamily: 'EncodeSans-Regular',
-  },
-  noResults: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  noResultsText: {
-    color: '#333333',
-    fontSize: '17@ms',
-    lineHeight: '24@ms',
-    textAlign: 'center',
-    fontFamily: 'EncodeSans-Medium',
   },
 });

@@ -109,6 +109,7 @@ const styles = ScaledSheet.create({
     fontSize: '14@msr',
     marginLeft: '12@s',
     lineHeight: '20@msr',
+    textTransform: 'uppercase',
     fontFamily: 'EncodeSans-Regular',
   },
   textBold: {

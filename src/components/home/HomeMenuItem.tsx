@@ -14,8 +14,8 @@ import {
 } from 'react-native-size-matters/extend';
 import { SvgXml } from 'react-native-svg';
 
-import { arrowRightIcon } from '~/assets/images';
 import { ListenContext } from '~/context/ListenContext';
+import ArrowRightIcon from '~/components/shared/icons/ArrowRightIcon';
 
 const HomeMenuItem = ({
   title = '',
@@ -76,9 +76,7 @@ const HomeMenuItem = ({
         </View>
         
         {showArrow && (
-          <SvgXml
-            height={vs(20)}
-            xml={arrowRightIcon}
+          <ArrowRightIcon
             style={styles.arrow}
           />
         )}

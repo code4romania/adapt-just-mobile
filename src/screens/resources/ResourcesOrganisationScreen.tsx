@@ -21,6 +21,7 @@ import useWithReducer from '~/hooks/use-with-reducer';
 import useLoadingView from '~/hooks/use-loading-view';
 import { getResource } from '~/services/resources-service';
 
+import ListEmpty from '~/components/shared/screens/ListEmpty';
 import HomeButton from '~/components/shared/buttons/HomeButton';
 import ScreenTitle from '~/components/shared/screens/ScreenTitle';
 import ScreenContainer from '~/components/shared/screens/ScreenContainer';
@@ -33,6 +34,8 @@ const initialState = {
   loading: true,
   organisation: null,
 };
+
+const emptyText = 'Nu s-a găsit organizația';
 
 const ResourcesOrganisationScreen = ({
   route,
@@ -49,7 +52,7 @@ const ResourcesOrganisationScreen = ({
     const text = [...listenText];
 
     if (showNoResults) {
-      text.push('Nu s-a încărcat organizația');
+      text.push(emptyText);
     }
 
     if (hasOrganisation) {
@@ -115,11 +118,9 @@ const ResourcesOrganisationScreen = ({
         contentContainerStyle={styles.container}
       >
         {showNoResults && (
-          <View style={styles.noResults}>
-            <Text style={styles.noResultsText}>
-              Nu s-a încărcat organizația
-            </Text>
-          </View>
+          <ListEmpty
+            text={emptyText}
+          />
         )}
 
         {hasOrganisation && (
@@ -222,17 +223,5 @@ const styles = ScaledSheet.create({
     fontSize: '20@msr',
     lineHeight: '27@msr',
     fontFamily: 'EncodeSans-SemiBold',
-  },
-  noResults: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  noResultsText: {
-    color: '#333333',
-    fontSize: '17@ms',
-    lineHeight: '24@ms',
-    textAlign: 'center',
-    fontFamily: 'EncodeSans-Medium',
   },
 });

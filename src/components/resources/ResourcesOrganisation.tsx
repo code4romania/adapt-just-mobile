@@ -5,13 +5,9 @@ import {
   Image,
   TouchableHighlight,
 } from 'react-native';
-import {
-  vs,
-  ScaledSheet,
-} from 'react-native-size-matters/extend';
-import { SvgXml } from 'react-native-svg';
+import { ScaledSheet } from 'react-native-size-matters/extend';
 
-import { arrowRightIcon } from '~/assets/images';
+import ArrowRightIcon from '~/components/shared/icons/ArrowRightIcon';
 
 const ResourcesOrganisation = ({
   navigation,
@@ -49,10 +45,7 @@ const ResourcesOrganisation = ({
           </Text>
         </View>
 
-        <SvgXml
-          height={vs(20)}
-          xml={arrowRightIcon}
-        />
+        <ArrowRightIcon />
       </>
     </TouchableHighlight>
   );
@@ -66,7 +59,7 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: '20@vs',
-    borderRadius: '6@msr',
+    borderRadius: '8@msr',
     borderColor: '#FBBF24',
     backgroundColor: '#FFF',
     paddingVertical: '18@vs',

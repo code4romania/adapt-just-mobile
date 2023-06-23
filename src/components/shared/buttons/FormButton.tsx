@@ -12,7 +12,7 @@ import {
 } from 'react-native-size-matters/extend';
 import { SvgXml } from 'react-native-svg';
 
-import { arrowRightIcon } from '~/assets/images';
+import ArrowRightIcon from '~/components/shared/icons/ArrowRightIcon';
 
 const FormButton = ({
   title = '',
@@ -67,10 +67,7 @@ const FormButton = ({
           </View>
         </View>
 
-        <SvgXml
-          height={vs(20)}
-          xml={arrowRightIcon}
-        />
+        <ArrowRightIcon />
       </>
     </TouchableHighlight>
   );

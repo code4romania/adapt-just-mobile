@@ -1,14 +1,12 @@
 import React from 'react';
-import {
-  View,
-  Text,
-} from 'react-native';
-import { ScaledSheet } from 'react-native-size-matters/extend';
+import { View } from 'react-native';
 
 import ResourcesOrganisation from './ResourcesOrganisation';
+import ListEmpty from '~/components/shared/screens/ListEmpty';
 
 const ResourcesOrganisations = ({
   navigation,
+  emptyText = '',
   loading = false,
   organisations = [],
 }) => {
@@ -16,13 +14,11 @@ const ResourcesOrganisations = ({
   const showNoResults = !loading && !hasOrganisations;
 
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1 }}>
       {showNoResults && (
-        <View style={styles.noResults}>
-          <Text style={styles.noResultsText}>
-            Nu există organizații
-          </Text>
-        </View>
+        <ListEmpty
+          text={emptyText}
+        />
       )}
 
       {hasOrganisations && (
@@ -41,21 +37,3 @@ const ResourcesOrganisations = ({
 };
 
 export default ResourcesOrganisations;
-
-const styles = ScaledSheet.create({
-  container: {
-    flex: 1,
-  },
-  noResults: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  noResultsText: {
-    color: '#333333',
-    fontSize: '17@ms',
-    lineHeight: '24@ms',
-    textAlign: 'center',
-    fontFamily: 'EncodeSans-Medium',
-  },
-});

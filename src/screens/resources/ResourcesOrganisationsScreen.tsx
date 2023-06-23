@@ -27,6 +27,8 @@ const initialState = {
   organisations: [],
 };
 
+const emptyText = 'Nu s-au găsit organizații';
+
 const ResourcesOrganisationsScreen = ({
   navigation,
 }) => {
@@ -41,7 +43,7 @@ const ResourcesOrganisationsScreen = ({
     const showNoResults = !state.loading && !hasOrganisations;
 
     if (showNoResults) {
-      text.push('Nu există organizații');
+      text.push(emptyText);
     }
 
     if (hasOrganisations) {
@@ -97,6 +99,7 @@ const ResourcesOrganisationsScreen = ({
 
         <View style={styles.resourcesContainer}>
           <ResourcesOrganisations
+            emptyText={emptyText}
             loading={state.loading}
             navigation={navigation}
             organisations={state.organisations}
