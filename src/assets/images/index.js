@@ -7,6 +7,8 @@ import listenIcon from './listen-icon.svg';
 import uploadIcon from './upload-icon.svg';
 import attachmentIcon from './attachment-icon.svg';
 
+import infoIcon from './info-icon.svg';
+import moneyIcon from './money-icon.svg';
 import closeIcon from './close-icon.svg';
 import checkIcon from './check-icon.svg';
 import alertIcon from './alert-icon.svg';
@@ -43,10 +45,26 @@ import lawyerIcon from './lawyer-icon.svg';
 import phoneNumberIcon from './phone_number-icon.svg';
 import organisationIcon from './organisation-icon.svg';
 
+// about
+import c4r from './about/c4r.png';
+import crj from './about/crj.png';
+import frds from './about/frds.png';
+import hideBg from './about/hide-bg.png';
+import ilnGrants from './about/iln-grants.png';
+import hideButton from './about/hide-button.png';
+import listenButton from './about/listen-button.png';
+import complaintName from './about/complaint-name.png';
+import ministerulPublic from './about/ministerul-public.png';
+import askHelpComplaint from './about/ask-help-complaint.png';
+import askHelpResources from './about/ask-help-resources.png';
+import askHelpInformation from './about/ask-help-information.png';
+
 export {
   prevIcon,
   nextIcon,
   hideIcon,
+  infoIcon,
+  moneyIcon,
   checkIcon,
   closeIcon,
   alertIcon,
@@ -82,6 +100,19 @@ export {
   lawyerIcon,
   phoneNumberIcon,
   organisationIcon,
+
+  c4r,
+  crj,
+  frds,
+  hideBg,
+  ilnGrants,
+  hideButton,
+  listenButton,
+  complaintName,
+  ministerulPublic,
+  askHelpComplaint,
+  askHelpResources,
+  askHelpInformation,
 };
 
 export const gradient = require('./gradient.png');

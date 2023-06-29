@@ -5,18 +5,13 @@ import React, {
 import {
   View,
   Text,
-  Linking,
   ScrollView,
-  TouchableOpacity,
 } from 'react-native';
 import {
   ms,
-  vs,
   ScaledSheet,
 } from 'react-native-size-matters/extend';
-import { SvgXml } from 'react-native-svg';
 
-import { phoneIcon } from '~/assets/images';
 import useWithReducer from '~/hooks/use-with-reducer';
 import useLoadingView from '~/hooks/use-loading-view';
 import { getResource } from '~/services/resources-service';
@@ -24,6 +19,7 @@ import { getResource } from '~/services/resources-service';
 import ListEmpty from '~/components/shared/screens/ListEmpty';
 import HomeButton from '~/components/shared/buttons/HomeButton';
 import ScreenTitle from '~/components/shared/screens/ScreenTitle';
+import PhoneButton from '~/components/shared/buttons/PhoneButton';
 import ScreenContainer from '~/components/shared/screens/ScreenContainer';
 
 const listenText = [
@@ -96,12 +92,6 @@ const ResourcesOrganisationScreen = ({
     }
   };
 
-  const handlePhonePress = async () => {
-    try {
-      await Linking.openURL(`tel:${state.organisation.phone}`);
-    } catch (error) {}
-  };
-
   return (
     <ScreenContainer
       listenText={lText}
@@ -140,26 +130,10 @@ const ResourcesOrganisationScreen = ({
 
             {!!state.organisation.phone && (
               <View style={styles.phoneContainer}>
-                <Text style={styles.phoneTitle}>
-                  Sună pentru a solicita ajutor
-                </Text>
-
-                <View style={{ flexDirection: 'row' }}>
-                  <TouchableOpacity
-                    style={styles.phoneButton}
-                    onPress={handlePhonePress}
-                  >
-                    <SvgXml
-                      height={vs(16)}
-                      xml={phoneIcon}
-                      style={styles.phoneIcon}
-                    />
-
-                    <Text style={styles.phoneText}>
-                      {state.organisation.phone}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                <PhoneButton
+                  phone={state.organisation.phone}
+                  label="Sună pentru a solicita ajutor"
+                />
               </View>
             )}
           </>
@@ -195,33 +169,5 @@ const styles = ScaledSheet.create({
   },
   phoneContainer: {
     marginTop: '50@vs',
-  },
-  phoneTitle: {
-    color: '#111827',
-    fontSize: '19@ms',
-    lineHeight: '27@ms',
-    textTransform: 'uppercase',
-    fontVariant: ['small-caps'],
-    fontFamily: 'EncodeSans-Semibold',
-  },
-  phoneButton: {
-    borderWidth: 1,
-    marginTop: '8@vs',
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: '6@msr',
-    borderColor: '#D1D5DB',
-    backgroundColor: '#FFF',
-    paddingVertical: '13@vs',
-    paddingHorizontal: '25@s',
-  },
-  phoneIcon: {
-    marginRight: '14@s',
-  },
-  phoneText: {
-    color: '#111827',
-    fontSize: '20@msr',
-    lineHeight: '27@msr',
-    fontFamily: 'EncodeSans-SemiBold',
   },
 });

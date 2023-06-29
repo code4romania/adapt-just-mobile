@@ -18,12 +18,6 @@ const HomeMenu = ({
 }) => {
   const { callEmergency } = useEmergency();
 
-  // const navigateComplaint = () => {
-  //   navigation.navigate('Complaint', {
-  //     screen: 'ComplaintVictim',
-  //   });
-  // };
-
   const navigateArticles = () => {
     navigation.navigate('Articles');
   };
@@ -32,13 +26,16 @@ const HomeMenu = ({
     navigation.navigate('Resources');
   };
 
+  const navigateAboutApp = () => {
+    navigation.navigate('AboutApp');
+  };
+
   return (
     <View>
       <HomeMenuItem
         position={1}
         icon={askHelpIcon}
         title="Cere ajutor"
-        // onPress={navigateComplaint}
         onPress={onComplaint}
       />
       <HomeMenuItem
@@ -57,6 +54,7 @@ const HomeMenu = ({
         position={4}
         icon={aboutAppIcon}
         title="Despre aplicație"
+        onPress={navigateAboutApp}
       />
       <HomeMenuItem
         position={5}

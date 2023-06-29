@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 const start = { x: 0, y: 0 };
-const end = { x: 1, y: 0 };
+const end = { x: 0, y: 1 };
 
 const BackgroundGradient = ({
   children,

@@ -1,8 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
+import { vs } from 'react-native-size-matters/extend';
 
-import ResourcesPhoneNumber from './ResourcesPhoneNumber';
 import ListEmpty from '~/components/shared/screens/ListEmpty';
+import PhoneButton from '~/components/shared/buttons/PhoneButton';
 
 const ResourcesPhoneNumbers = ({
   emptyText = '',
@@ -23,10 +24,15 @@ const ResourcesPhoneNumbers = ({
       {hasPhones && (
         <View>
           {phoneNumbers.map((phoneNumber) => (
-            <ResourcesPhoneNumber
-              phoneNumber={phoneNumber}
+            <View
               key={`phone_${phoneNumber.id}`}
-            />
+              style={{ marginBottom: vs(20) }}
+            >
+              <PhoneButton
+                label={phoneNumber.name}
+                phone={phoneNumber.phone}
+              />
+            </View>
           ))}
         </View>
       )}

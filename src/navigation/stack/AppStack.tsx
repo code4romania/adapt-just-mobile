@@ -19,6 +19,16 @@ import ResourcesPhoneNumbersScreen from '~/screens/resources/ResourcesPhoneNumbe
 import ResourcesOrganisationScreen from '~/screens/resources/ResourcesOrganisationScreen';
 import ResourcesOrganisationsScreen from '~/screens/resources/ResourcesOrganisationsScreen';
 
+import AboutAppScreen from '~/screens/about/AboutAppScreen';
+import AboutHideScreen from '~/screens/about/AboutHideScreen';
+import AboutHelpScreen from '~/screens/about/AboutHelpScreen';
+import HowToUseAppScreen from '~/screens/about/HowToUseAppScreen';
+import AboutListenScreen from '~/screens/about/AboutListenScreen';
+import AboutProjectScreen from '~/screens/about/AboutProjectScreen';
+import AboutComplaintScreen from '~/screens/about/AboutComplaintScreen';
+import AboutInformationScreen from '~/screens/about/AboutInformationScreen';
+import FundingAndPartnersScreen from '~/screens/about/FundingAndPartnersScreen';
+
 const TransitionScreenOptions = {
   ...TransitionPresets.SlideFromRightIOS,
 };
@@ -76,6 +86,43 @@ const AppStack = () => {
         <Stack.Screen
           name="ResourcesLawyer"
           component={ResourcesLawyerScreen}
+        />
+
+        <Stack.Screen
+          name="AboutApp"
+          component={AboutAppScreen}
+        />
+        <Stack.Screen
+          name="AboutProject"
+          component={AboutProjectScreen}
+        />
+        <Stack.Screen
+          name="FundingAndPartners"
+          component={FundingAndPartnersScreen}
+        />
+        <Stack.Screen
+          name="HowToUseApp"
+          component={HowToUseAppScreen}
+        />
+        <Stack.Screen
+          name="AboutListen"
+          component={AboutListenScreen}
+        />
+        <Stack.Screen
+          name="AboutHide"
+          component={AboutHideScreen}
+        />
+        <Stack.Screen
+          name="AboutComplaint"
+          component={AboutComplaintScreen}
+        />
+        <Stack.Screen
+          name="AboutHelp"
+          component={AboutHelpScreen}
+        />
+        <Stack.Screen
+          name="AboutInformation"
+          component={AboutInformationScreen}
         />
       </Stack.Navigator>
     </LocationsProvider>

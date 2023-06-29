@@ -12,10 +12,8 @@ import {
   ms,
   ScaledSheet,
 } from 'react-native-size-matters/extend';
-import { SvgXml } from 'react-native-svg';
 
 import { getHtmlToArray } from '~/utils/html';
-import { chevronDownIcon } from '~/assets/images';
 import useWithReducer from '~/hooks/use-with-reducer';
 import useLoadingView from '~/hooks/use-loading-view';
 import { getArticle } from '~/services/articles-service';
@@ -25,6 +23,7 @@ import HomeButton from '~/components/shared/buttons/HomeButton';
 import ScreenTitle from '~/components/shared/screens/ScreenTitle';
 import HtmlContent from '~/components/shared/screens/HtmlContent';
 import ScreenContainer from '~/components/shared/screens/ScreenContainer';
+import ExpandContentButton from '~/components/shared/buttons/ExpandContentButton';
 
 const listenText = [
   'Informații',
@@ -70,11 +69,8 @@ const ArticleScreen = ({
       }
 
       if (state.article?.short_content) {
-        if (!state.showShortContent) {
-          text.push('Citește textul în format accesibilizat');
-        } else {
-          text.push('Ascunde textul în format accesibilizat');
-
+        text.push('Citește textul în format accesibilizat');
+        if (state.showShortContent) {
           const shortContent = state.article.short_content;
           
           text = [
@@ -160,36 +156,14 @@ const ArticleScreen = ({
             )}
 
             {!!state.article.short_content && (
-              <View style={styles.shortContent}>
-                <TouchableOpacity
-                  style={styles.expandButton}
-                  onPress={toggleShortContent}
-                >
-                  <SvgXml
-                    width={ms(16)}
-                    height={ms(16)}
-                    xml={chevronDownIcon}
-                    style={
-                      state.showShortContent && {
-                        transform: [{ rotate: '180deg' }],
-                      }
-                    }
-                  />
-
-                  <Text
-                    numberOfLines={1}
-                    style={styles.expandButtonText}
-                  >
-                    {`${state.showShortContent ? 'Ascunde' : 'Citește'} textul în format accesibilizat`}
-                  </Text>
-                </TouchableOpacity>
-
-                {state.showShortContent && (
-                  <HtmlContent
-                    html={state.article.short_content}
-                  />
-                )}
-              </View>
+              <ExpandContentButton
+                expanded={state.showShortContent}
+                onPress={toggleShortContent}
+              >
+                <HtmlContent
+                  html={state.article.short_content}
+                />
+              </ExpandContentButton>
             )}
 
             <View style={styles.complaint}>
@@ -239,27 +213,6 @@ const styles = ScaledSheet.create({
     textTransform: 'uppercase',
     fontVariant: ['small-caps'],
     fontFamily: 'EncodeSans-Regular',
-  },
-  expandButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderTopWidth: '1@msr',
-    paddingVertical: '3@vs',
-    paddingHorizontal: '5@s',
-    borderTopColor: '#1F2937',
-  },
-  expandButtonText: {
-    color: '#1F2937',
-    marginLeft: '8@s',
-    fontSize: '14@msr',
-    lineHeight: '32@msr',
-    textTransform: 'uppercase',
-    fontFamily: 'EncodeSans-SemiBold',
-  },
-  shortContent: {
-    marginTop: '20@vs',
-    borderBottomWidth: '1@msr',
-    borderBottomColor: '#1F2937',
   },
   complaint: {
     marginTop: '30@vs',
