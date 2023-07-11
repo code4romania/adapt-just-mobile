@@ -7,6 +7,7 @@ import {
   View,
   Text,
 } from 'react-native';
+import RNFS from 'react-native-fs';
 import FileViewer from 'react-native-file-viewer';
 import { ScaledSheet } from 'react-native-size-matters/extend';
 
@@ -26,11 +27,11 @@ const ComplaintUploads = ({
     let isVideo = false;
 
     if (showUpload?.id) {
-      // isPdf = showUpload?.mime?.includes('pdf') || false;
+      isPdf = showUpload?.mime?.includes('pdf') || false;
       isImage = showUpload?.mime?.includes('image') || false;
       isVideo = showUpload?.mime?.includes('video') || false;
     } else {
-      // isPdf = showUpload?.type?.includes('pdf') || false;
+      isPdf = showUpload?.type?.includes('pdf') || false;
       isImage = showUpload?.type?.includes('image') || false;
       isVideo = showUpload?.type?.includes('video') || false;
     }
@@ -46,7 +47,24 @@ const ComplaintUploads = ({
     if (showUploadType.isPdf) {
       const uri = showUpload?.dataUrl || showUpload?.uri || null;
 
-      FileViewer.open(uri)
+      if (!showUpload?.id) {
+        FileViewer.open(uri)
+          .then(() => {})
+          .catch((error) => {});
+
+        return;
+      }
+
+      const extension = uri.split(/[#?]/)[0].split('.').pop().trim();
+      const localFile = `${RNFS.DocumentDirectoryPath}/temporaryfile.${extension}`;
+
+      const options = {
+        fromUrl: uri,
+        toFile: localFile,
+      };
+
+      RNFS.downloadFile(options)
+        .promise.then(() => FileViewer.open(localFile))
         .then(() => {})
         .catch((error) => {});
     }

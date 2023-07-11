@@ -1,5 +1,6 @@
 import React, {
   useMemo,
+  useEffect,
   useContext,
 } from 'react';
 import {
@@ -32,6 +33,7 @@ const listenText = [
 ];
 
 const ComplaintLocationToScreen = ({
+  route,
   navigation,
 }) => {
   const {
@@ -40,6 +42,7 @@ const ComplaintLocationToScreen = ({
     locationToType,
     setLocationTo,
     setLocationToType,
+    setComplaintStep,
   } = useContext(ComplaintContext);
 
   const isNone = locationToType === 'none';
@@ -55,6 +58,12 @@ const ComplaintLocationToScreen = ({
     return text;
   }, [locationTo]);
 
+  useEffect(() => {
+    if (route?.params?.step > 3) {
+      navigation.navigate('ComplaintMovingReason');
+    }
+  }, [route?.params]);
+
   const handleRecording = (result = '') => {
     const name = result.toUpperCase().trim();
 
@@ -63,25 +72,8 @@ const ComplaintLocationToScreen = ({
     });
   };
 
-  // const handleRecording = (results) => {
-  //   if (!locationTo?.id) {
-  //     const name = locationTo?.label || locationTo?.name || '';
-  //     const res = results.join(' ').toUpperCase();
-
-  //     const newName = `${name} ${res}`;    
-  //     setLocationTo({
-  //       ...locationTo,
-  //       name: newName,
-  //     });
-  //   } else {
-  //     setLocationTo({
-  //       ...locationTo,
-  //       name: results.join(' ').toUpperCase(),
-  //     });
-  //   }
-  // };
-
   const handleNext = () => {
+    setComplaintStep({ step: 4 });
     navigation.navigate('ComplaintMovingReason');
   };
 

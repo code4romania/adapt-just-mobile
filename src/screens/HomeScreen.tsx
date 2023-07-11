@@ -123,35 +123,6 @@ const HomeScreen = ({
       .catch((e) => {});
   };
 
-  const navigateComplaint = () => {
-    let complaintScreen = 'ComplaintVictim';
-
-    // if (complaintRef.current) {
-    //   const data = JSON.parse(complaintRef.current);
-    //   if (data.victim === 'me') {
-    //     complaintScreen= 'ComplaintType';
-    //     if (data.type !== '') {
-    //       complaintScreen = 'ComplaintDisclaimer';
-    //     }
-    //   } else if (data.victim === 'other') {
-    //     complaintScreen = 'ComplaintDisclaimer';
-    //   }
-
-    //   if (data.disclaimerShown) {
-    //     complaintScreen = 'ComplaintData';
-    //   }
-    //   if (data.dataShown) {
-    //     // check by step
-    //     complaintScreen = 'ComplaintName';
-    //   }
-    // }
-
-    navigation.navigate('Complaint', {
-      // initial: false,
-      screen: complaintScreen,
-    });
-  };
-
   return (
     <ScreenContainer
       listenText={listenText}
@@ -167,7 +138,6 @@ const HomeScreen = ({
         <View style={styles.menu}>
           <HomeMenu
             navigation={navigation}
-            onComplaint={navigateComplaint}
           />
         </View>
       </ScrollView>

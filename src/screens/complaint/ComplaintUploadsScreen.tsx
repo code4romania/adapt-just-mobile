@@ -1,6 +1,7 @@
 import React, {
   useMemo,
   useState,
+  useEffect,
   useContext,
 } from 'react';
 import {
@@ -31,6 +32,7 @@ const listenText = [
 ];
 
 const ComplaintUploadsScreen = ({
+  route,
   navigation,
 }) => {
   const {
@@ -41,6 +43,7 @@ const ComplaintUploadsScreen = ({
     steps,
     uploads,
     setUploads,
+    setComplaintStep,
   } = useContext(ComplaintContext);
 
   const [loading, setLoading] = useState(false);
@@ -54,9 +57,11 @@ const ComplaintUploadsScreen = ({
     return text;
   }, []);
 
-  const handleNext = () => {
-    navigation.navigate('ComplaintPreview');
-  };
+  useEffect(() => {
+    if (route?.params?.step === 6) {
+      navigation.navigate('ComplaintPreview');
+    }
+  }, [route?.params]);
 
   const handleUpload = async (file) => {
     if (!file) {
@@ -85,6 +90,12 @@ const ComplaintUploadsScreen = ({
     );
 
     setUploads(newUploads);
+  };
+
+  const handleNext = () => {
+    setComplaintStep({ step: 6 });
+
+    navigation.navigate('ComplaintPreview');
   };
 
   return (

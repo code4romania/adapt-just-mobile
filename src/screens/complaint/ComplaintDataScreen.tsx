@@ -25,11 +25,15 @@ const ComplaintDataScreen = ({
   navigation,
 }) => {
   const {
-    setDataShown,
+    setComplaintStep,
   } = useContext(ComplaintContext);
 
   const handleNext = () => {
-    setDataShown(true);
+    setComplaintStep({
+      step: 1,
+      dataShown: true,
+    });
+
     navigation.navigate('ComplaintName');
   };
 

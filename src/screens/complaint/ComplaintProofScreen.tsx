@@ -1,5 +1,6 @@
 import React, {
   useMemo,
+  useEffect,
   useContext,
 } from 'react';
 import {
@@ -32,12 +33,14 @@ const listenText = [
 ];
 
 const ComplaintProofScreen = ({
+  route,
   navigation,
 }) => {
   const {
     steps,
     proofType,
     setProofType,
+    setComplaintStep,
    } = useContext(ComplaintContext);
 
   const lText = useMemo(() => {
@@ -46,10 +49,28 @@ const ComplaintProofScreen = ({
     return text;
   }, []);
 
+  useEffect(() => {
+    if (route?.params?.step) {
+      goNextStep(route.params.step);
+    }
+  }, [route?.params]);
+
+  const goNextStep = (step) => {
+    if (step > 4) {
+      if (proofType !== 'yes') {
+        navigation.navigate('ComplaintPreview', { step });
+      } else {
+        navigation.navigate('ComplaintUploads', { step });
+      }
+    }
+  };
+
   const handleNext = () => {
     if (proofType === 'yes') {
+      setComplaintStep({ step: 5 });
       navigation.navigate('ComplaintUploads');
     } else {
+      setComplaintStep({ step: 6 });
       navigation.navigate('ComplaintPreview');
     }
   };

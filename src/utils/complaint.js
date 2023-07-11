@@ -2,6 +2,8 @@ import { ComplaintService } from '~/services';
 
 export const create = async (complaint) => {
   const data = {
+    lat: complaint.lat,
+    lng: complaint.lng,
     name: complaint.name,
     type: complaint.type,
     victim: complaint.victim,

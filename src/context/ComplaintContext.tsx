@@ -1,6 +1,5 @@
 import React, {
   useMemo,
-  useEffect,
   createContext,
 } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,6 +11,8 @@ import useWithReducer from '~/hooks/use-with-reducer';
 const complaintState = {
   name: '',
   type: '',           // hurt, move, evaluation
+  lat: null,
+  lng: null,
   victim: '',         // me, other
   reason: '',
   details: [],
@@ -85,49 +86,75 @@ export const ComplaintProvider = ({
     return location?.label || location?.name || '';
   }, [state.location]);
 
-  useEffect(() => {
-    storeComplaint();
-  }, [state]);
+  const setComplaint = (complaint) => {
+    setState({
+      ...complaint,
+      triedSubmit: false,
+    });
+  };
 
-  const storeComplaint = async () => {
+  const resetComplaint = async (params = {}) => {
     const data = {
-      ...state,
-      steps,
+      ...initialState,
+      ...params,
     };
 
     await AsyncStorage.setItem(
       '@complaint',
       JSON.stringify(data)
     );
+
+    setState(data);
   };
 
-  const setDisclaimerShown = (disclaimerShown) => {
-    setState({ disclaimerShown });
-  };
-
-  const setDataShown = (dataShown) => {
-    setState({ dataShown });
-  };
-
-  const setComplaintStep = (step = 1, triedSubmit = false) => {
+  const setCoords = (lat = null, lng = null) => {
     setState({
-      step,
-      triedSubmit,
+      lat,
+      lng,
     });
   };
 
-  const setVictim = (victim) => {
+  const setComplaintStep = async (params = {}) => {
+    const data = {
+      ...state,
+      ...params,
+    };
+
+    await AsyncStorage.setItem(
+      '@complaint',
+      JSON.stringify(data)
+    );
+
+    setState(data);
+  };
+
+  const setVictim = async (victim) => {
+    if (state.victim && victim !== state.victim) {
+      await resetComplaint({
+        victim,
+      });
+
+      return;
+    }
+
     setState({
-      ...initialState,
+      ...state,
       victim,
     });
   };
 
   const setType = (type) => {
-    const newState = {
-      ...initialState,
+    let newState = {
+      ...state,
       type,
     };
+
+    if (state.type && type !== state.type) {
+      newState = {
+        ...initialState,
+        type,
+      }; 
+    }
 
     if (type && type !== 'hurt') {
       newState.details = [type];
@@ -196,8 +223,9 @@ export const ComplaintProvider = ({
     locationName,
     agenciesText,
 
-    setDisclaimerShown,
-    setDataShown,
+    setCoords,
+    setComplaint,
+    resetComplaint,
     setVictim,
     setType,
     setName,

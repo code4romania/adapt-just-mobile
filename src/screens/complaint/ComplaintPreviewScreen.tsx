@@ -46,7 +46,6 @@ const listenText = [
   'Pasul :step din :steps',
   'Plângerea ta',
   'Verifică conținutul plângerii și când ești sigur sigură că vrei să o trimiți, apasă trimite. Odată trimisă, ea va ajunge direct la ',
-  // 'Verifică conținutul plângerii și când ești sigur/ă că vrei să o trimiți, apasă trimite. Odată trimisă, ea va ajunge direct la ',
 ];
 
 const ComplaintPreviewScreen = ({
@@ -146,7 +145,10 @@ const ComplaintPreviewScreen = ({
 
   const handleNext = async () => {
     if (!isConnected) {
-      setComplaintStep(step, true);
+      setComplaintStep({
+        step,
+        triedSubmit: true,
+      });
 
       Alert.alert(
         'Fără conexiune la internet'.toUpperCase(),

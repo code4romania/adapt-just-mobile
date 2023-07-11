@@ -1,4 +1,6 @@
 import React, {
+  useRef,
+  useEffect,
   useContext,
 } from 'react';
 import {
@@ -6,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters/extend';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   complaintHurtIcon,
@@ -35,15 +38,32 @@ const listenText = [
 const ComplaintTypeScreen = ({
   navigation,
 }) => {
+  const complaintRef = useRef('');
+
   const {
     type,
+    victim,
+    details,
     setType,
+    setComplaint,
+    resetComplaint,
   } = useContext(ComplaintContext);
 
   const nextEnabled = type !== '';
   const isHurt = type === 'hurt';
   const isMove = type === 'move';
   const isEvaluation = type === 'evaluation';
+
+  useEffect(() => {
+    const getComplaint = async () => {
+      const complaint = await AsyncStorage.getItem('@complaint');
+
+      if (!complaint) return;
+      complaintRef.current = complaint;
+    };
+
+    getComplaint();
+  }, []);
 
   const handleType = (value) => {
     if (value === type) {
@@ -53,8 +73,42 @@ const ComplaintTypeScreen = ({
     }
   };
 
-  const handleNext = () => {
-    navigation.navigate('ComplaintDisclaimer');
+  const handleNext = async () => {
+    let screen = 'ComplaintDisclaimer';
+
+    if (complaintRef.current) {
+      const complaint = JSON.parse(complaintRef.current);
+      const { step } = complaint;
+
+      if (complaint?.type === type) {
+        if (complaint?.disclaimerShown) {
+          screen = 'ComplaintData';
+        }
+
+        if (complaint?.dataShown) {
+          screen = 'ComplaintName';
+        }
+
+        setComplaint(complaint);
+      } else {
+        await resetComplaint({
+          type,
+          victim,
+          details,
+          dataShown: false,
+          disclaimerShown: false,
+        });
+      }
+
+      navigation.navigate(screen, {
+        step,
+        type,
+      });
+
+      return;
+    }
+
+    navigation.navigate(screen);
   };
 
   return (

@@ -34,10 +34,6 @@ const listenText = [
   'Am fost abuzat abuzată sexual',
   'Am fost sedat sedată',
   'Am fost pedepsit pedepsită',
-  // 'Am fost bătut/ă',
-  // 'Am fost abuzat/ă sexual',
-  // 'Am fost sedat/ă',
-  // 'Am fost pedepsit/ă',
   'Altceva',
   'Înapoi',
   'Continuă',
@@ -51,6 +47,7 @@ const ComplaintDetailsScreen = ({
     steps,
     details,
     setDetails,
+    setComplaintStep,
   } = useContext(ComplaintContext);
 
   const otherChecked = useMemo(() => {
@@ -76,7 +73,17 @@ const ComplaintDetailsScreen = ({
 
       navigation.setParams({ reason: null });
     }
+
+    if (route?.params?.step) {
+      goNextStep(route?.params?.step);
+    }
   }, [route]);
+
+  const goNextStep = (step) => {
+    if (step > 3) {
+      navigation.navigate('ComplaintProof', { step });
+    }
+  };
 
   const handleChange = (value) => {
     if (value === 'other') {
@@ -100,6 +107,7 @@ const ComplaintDetailsScreen = ({
   };
 
   const handleNext = () => {
+    setComplaintStep({ step: 4 });
     navigation.navigate('ComplaintProof');
   };
 

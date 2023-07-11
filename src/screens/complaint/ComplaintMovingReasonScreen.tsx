@@ -1,5 +1,6 @@
 import React, {
   useMemo,
+  useEffect,
   useContext,
 } from 'react';
 import {
@@ -30,12 +31,14 @@ const listenText = [
 ];
 
 const ComplaintMovingReasonScreen = ({
+  route,
   navigation,
 }) => {
   const {
     steps,
     reason,
     setReason,
+    setComplaintStep,
   } = useContext(ComplaintContext);
 
   const lText = useMemo(() => {
@@ -49,6 +52,12 @@ const ComplaintMovingReasonScreen = ({
     return text;
   }, [reason]);
 
+  useEffect(() => {
+    if (route?.params?.step > 4) {
+      navigation.navigate('ComplaintPreview');
+    }
+  }, [route?.params]);
+
   const handleRecording = (result = '') => {
     result = result.toUpperCase().trim();
     
@@ -56,6 +65,7 @@ const ComplaintMovingReasonScreen = ({
   };
 
   const handleNext = () => {
+    setComplaintStep({ step: 5 });
     navigation.navigate('ComplaintPreview');
   };
 

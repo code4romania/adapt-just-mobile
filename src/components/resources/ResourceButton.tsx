@@ -29,6 +29,7 @@ const ResourceButton = ({
             <View style={styles.icon}>
               <SvgXml
                 xml={icon}
+                width={vs(30)}
                 height={vs(30)}
               />
             </View>

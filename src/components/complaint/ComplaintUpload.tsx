@@ -35,8 +35,7 @@ const ComplaintUpload = ({
       isVideo = upload?.type?.includes('video') || false;
     }
 
-    return isImage || isVideo;
-    // return isPdf || isImage || isVideo;
+    return isPdf || isImage || isVideo;
   }, [upload]);
 
   const containerStyle = [

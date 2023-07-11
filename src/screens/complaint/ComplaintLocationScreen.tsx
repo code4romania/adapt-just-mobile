@@ -37,6 +37,7 @@ const listenText = [
 ];
 
 const ComplaintLocationScreen = ({
+  route,
   navigation,
 }) => {
   const {
@@ -49,7 +50,9 @@ const ComplaintLocationScreen = ({
     victim,
     location,
     locationName,
+    setCoords,
     setLocation,
+    setComplaintStep,
   } = useContext(ComplaintContext);
 
   const {
@@ -57,6 +60,8 @@ const ComplaintLocationScreen = ({
   } = useGeolocation();
 
   const [loading, setLoading] = useState(true);
+
+  const nextEnabled = !!location;
 
   useLoadingView(loading);
 
@@ -92,6 +97,34 @@ const ComplaintLocationScreen = ({
     getLocationAsync();
   }, []);
 
+  useEffect(() => {
+    if (route?.params?.step) {
+      goNextStep(route?.params?.step);
+    }
+  }, [route?.params]);
+
+  const goNextStep = (step) => {
+    if (step > 2) {
+      let screen = '';
+
+      if (victim === 'other') {
+        screen = 'ComplaintOtherReason';
+      } else {
+        if (type === 'hurt') {
+          screen = 'ComplaintDetails';
+        }
+        if (type === 'move') {
+          screen = 'ComplaintLocationTo';
+        }
+        if (type === 'evaluation') {
+          screen = 'ComplaintPreview';
+        }
+      }
+
+      navigation.navigate(screen, { step });
+    }
+  };
+
   const getLocationAsync = useCallback(async () => {
     try {
       const position = await getLocation();
@@ -103,6 +136,8 @@ const ComplaintLocationScreen = ({
         latitude,
         longitude,
       } = position.coords;
+
+      setCoords(latitude, longitude);
 
       let min = 100000;
       let currentLocation = null;
@@ -145,6 +180,8 @@ const ComplaintLocationScreen = ({
   };
 
   const handleNext = () => {
+    setComplaintStep({ step: 3 });
+
     if (!type) {
       navigation.navigate('ComplaintOtherReason'); 
     } else {
@@ -197,6 +234,7 @@ const ComplaintLocationScreen = ({
 
       <View style={styles.actionsContainer}>
         <ScreenActions
+          nextEnabled={nextEnabled}
           onNext={handleNext}
         />
       </View>

@@ -1,4 +1,6 @@
 import React, {
+  useRef,
+  useEffect,
   useContext,
 } from 'react';
 import {
@@ -7,6 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters/extend';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   complaintMeIcon,
@@ -26,23 +29,71 @@ const listenText = [
   'Am eu o problemă și am nevoie de ajutor',
   'Pentru altcineva',
   'Are altcineva o problemă și vreau să îl o ajut',
-  // 'Are altcineva o problemă și vreau să îl/o ajut',
   'Dacă tu ești în pericol sau altă persoană este în pericol, sună urgent la 1 1 2',
 ];
 
 const ComplaintVictimScreen = ({
   navigation,
 }) => {
-  const { callEmergency } = useEmergency();
-  const { setVictim } = useContext(ComplaintContext);
+  const complaintRef = useRef('');
 
-  const navigateType = (victim) => {
-    setVictim(victim);
+  const { callEmergency } = useEmergency();
+  const {
+    setVictim,
+    setComplaint,
+    resetComplaint,
+  } = useContext(ComplaintContext);
+
+  useEffect(() => {
+    const getComplaint = async () => {
+      const complaint = await AsyncStorage.getItem('@complaint');
+
+      if (!complaint) return;
+      complaintRef.current = complaint;
+    };
+
+    getComplaint();
+  }, []);
+
+  const navigateType = async (victim) => {
+    await setVictim(victim);
 
     if (victim === 'me') {
       navigation.navigate('ComplaintType');
     } else {
-      navigation.navigate('ComplaintDisclaimer');
+      let screen = 'ComplaintDisclaimer';
+
+      if (complaintRef.current) {
+        const complaint = JSON.parse(complaintRef.current);
+        const { step } = complaint;
+  
+        if (complaint?.victim === victim) {
+          if (complaint?.disclaimerShown) {
+            screen = 'ComplaintData';
+          }
+  
+          if (complaint?.dataShown) {
+            screen = 'ComplaintName';
+          }
+  
+          setComplaint(complaint);
+
+          navigation.navigate(screen, {
+            step,
+            victim,
+          });
+
+          return;
+        } else {
+          await resetComplaint({
+            victim,
+            dataShown: false,
+            disclaimerShown: false,
+          });
+        }
+      }
+
+      navigation.navigate(screen);
     }
   };
 

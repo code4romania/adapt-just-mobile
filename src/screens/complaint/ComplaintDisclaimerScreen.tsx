@@ -35,7 +35,7 @@ const ComplaintDisclaimerScreen = ({
 }) => {
   const {
     agenciesText,
-    setDisclaimerShown,
+    setComplaintStep,
   } = useContext(ComplaintContext);
 
   const lText = useMemo(() => {
@@ -47,7 +47,11 @@ const ComplaintDisclaimerScreen = ({
     
 
   const handleNext = () => {
-    setDisclaimerShown(true);
+    setComplaintStep({
+      step: 1,
+      disclaimerShown: true,
+    });
+
     navigation.navigate('ComplaintData');
   };
 

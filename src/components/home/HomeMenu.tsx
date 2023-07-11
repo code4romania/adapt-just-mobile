@@ -14,9 +14,12 @@ import HomeMenuItem from './HomeMenuItem';
 
 const HomeMenu = ({
   navigation,
-  onComplaint,
 }) => {
   const { callEmergency } = useEmergency();
+
+  const navigateComplaint = () => {
+    navigation.navigate('Complaint');
+  };
 
   const navigateArticles = () => {
     navigation.navigate('Articles');
@@ -36,7 +39,7 @@ const HomeMenu = ({
         position={1}
         icon={askHelpIcon}
         title="Cere ajutor"
-        onPress={onComplaint}
+        onPress={navigateComplaint}
       />
       <HomeMenuItem
         position={2}
