@@ -176,14 +176,25 @@ export const ListenProvider = ({
 
     textRef.current = text;
 
-    // if (state.isListen) {
     if (isListenRef.current) {
       await handleStop();
       return;
     }
 
     const newText = text.join(' . ');
-    Tts.speak(newText, params);
+
+    if (newText.length >= 3999) {
+      const result = [];
+      for (let i = 0; i < newText.length; i += 3999) {
+        result.push(newText.substring(i, i + 3999));
+      }
+    
+      result.forEach((value) => {
+        Tts.speak(value, params);
+      });
+    } else {
+      Tts.speak(newText, params);
+    }
   };
 
   const handleStop = async () => {

@@ -28,6 +28,7 @@ import AboutProjectScreen from '~/screens/about/AboutProjectScreen';
 import AboutComplaintScreen from '~/screens/about/AboutComplaintScreen';
 import AboutInformationScreen from '~/screens/about/AboutInformationScreen';
 import FundingAndPartnersScreen from '~/screens/about/FundingAndPartnersScreen';
+import TermsAndConditionsScreen from '~/screens/about/TermsAndConditionsScreen';
 
 const TransitionScreenOptions = {
   ...TransitionPresets.SlideFromRightIOS,
@@ -123,6 +124,10 @@ const AppStack = () => {
         <Stack.Screen
           name="AboutInformation"
           component={AboutInformationScreen}
+        />
+        <Stack.Screen
+          name="TermsAndConditions"
+          component={TermsAndConditionsScreen}
         />
       </Stack.Navigator>
     </LocationsProvider>

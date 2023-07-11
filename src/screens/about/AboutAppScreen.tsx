@@ -34,7 +34,7 @@ const AboutAppScreen = ({
   };
 
   const navigateTermsAndConditions = () => {
-
+    navigation.navigate('TermsAndConditions');
   };
 
   return (
