@@ -86,6 +86,12 @@ export const ComplaintProvider = ({
     return location?.label || location?.name || '';
   }, [state.location]);
 
+  const locationToName = useMemo(() => {
+    const { locationTo } = state;
+
+    return locationTo?.label || locationTo?.name || '';
+  }, [state.locationTo]);
+
   const setComplaint = (complaint) => {
     setState({
       ...complaint,
@@ -222,6 +228,7 @@ export const ComplaintProvider = ({
     steps,
     locationName,
     agenciesText,
+    locationToName,
 
     setCoords,
     setComplaint,

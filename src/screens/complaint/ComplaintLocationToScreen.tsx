@@ -60,7 +60,9 @@ const ComplaintLocationToScreen = ({
 
   useEffect(() => {
     if (route?.params?.step > 3) {
-      navigation.navigate('ComplaintMovingReason');
+      navigation.navigate('ComplaintMovingReason', {
+        step: route?.params?.step,
+      });
     }
   }, [route?.params]);
 

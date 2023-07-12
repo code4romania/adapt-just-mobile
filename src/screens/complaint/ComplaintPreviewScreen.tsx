@@ -28,7 +28,7 @@ const listenOptions = {
   sedated: 'Am fost sedat sedată',
   punished: 'Am fost pedepsit pedepsită',
 
-  move: 'Vreau să fiu mutat mutată la alt centru',
+  move: 'Vreau să fiu mutat mutată la',
   evaluation: 'Vreau să fiu evaluat evaluată din nou',
 };
 
@@ -38,7 +38,7 @@ const options = {
   sedated: 'Am fost sedat/ă',
   punished: 'Am fost pedepsit/ă',
 
-  move: 'Vreau să fiu mutat/ă la alt centru',
+  move: 'Vreau să fiu mutat/ă la',
   evaluation: 'Vreau să fiu evaluat/ă din nou',
 };
 
@@ -61,6 +61,7 @@ const ComplaintPreviewScreen = ({
     uploads,
     location,
     locationName,
+    locationToName,
     agenciesText,
     submit,
     setComplaintStep,
@@ -71,7 +72,16 @@ const ComplaintPreviewScreen = ({
 
   const getDetailsText = useCallback((detail) => {
     if (detail !== 'other') {
-      return options?.[detail] || '';
+      let text = options?.[detail] || '';
+      if (text && type === 'move') {
+        if (locationToName) {
+          text = `${text} ${locationToName}`;
+        } else {
+          text = `${text} alt centru`;
+        }
+      }
+
+      return text;
     } else {
       return reason;
     }
@@ -79,7 +89,16 @@ const ComplaintPreviewScreen = ({
 
   const getListenDetailsText = useCallback((detail) => {
     if (detail !== 'other') {
-      return listenOptions?.[detail] || '';
+      let text = listenOptions?.[detail] || '';
+      if (text && type === 'move') {
+        if (locationToName) {
+          text = `${text} ${locationToName}`;
+        } else {
+          text = `${text} alt centru`;
+        }
+      }
+
+      return text;
     } else {
       return reason;
     }
@@ -122,13 +141,12 @@ const ComplaintPreviewScreen = ({
 
       details.forEach((detail) => {
         let dText = getListenDetailsText(detail);
-
-        if (type === 'move' && !!reason) {
-          dText = `${dText}, deoarece ${reason}`
-        }
-
         text.push(dText);
       });
+
+      if (type === 'move' && !!reason) {
+        text.push(`Motivul pentru care vreau să mă mut este ${reason}`);
+      }
     }
 
     text.push('Solicit ca datele mele personale să nu devină publice ca urmare a acestei plângeri, a cărei soluționare o cer.');
@@ -268,7 +286,6 @@ const ComplaintPreviewScreen = ({
                     <Text style={styles.summaryHighlight}>
                       {getDetailsText(detail).trim()}
                     </Text>
-                    {(type === 'move' && !!reason) && `, deoarece ${reason}`}
                     {i === details.length - 1 ? '' : ';'}
                   </Text>
                 </View>
@@ -286,6 +303,14 @@ const ComplaintPreviewScreen = ({
                 </View>
               )}
             </View>
+
+            {(type === 'move' && !!reason) && (
+              <View style={styles.movingReason}>
+                <Text style={styles.summaryText}>
+                  Motivul pentru care vreau să mă mut este <Text style={styles.summaryTextBold}>{reason}</Text>
+                </Text>
+              </View>
+            )}
 
             <Text style={styles.summaryText}>
               Solicit ca datele mele personale să nu devină publice ca urmare a acestei plângeri, a cărei soluționare o cer.
@@ -392,5 +417,8 @@ const styles = ScaledSheet.create({
   },
   uploadsContainer: {
     marginTop: '15@vs',
+  },
+  movingReason: {
+    marginBottom: '20@vs',
   },
 });
