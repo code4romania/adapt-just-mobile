@@ -9,3 +9,13 @@ export const create = async (data = {}) => {
 
   return request(options);
 };
+
+export const getInstitutions = async (params = {}) => {
+  const options = {
+    url: `/public/complaints/institutions/list`,
+    method: `GET`,
+    params,
+  };
+
+  return request(options);
+};

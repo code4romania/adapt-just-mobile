@@ -33,13 +33,13 @@ const ComplaintSuccessScreen = ({
 }) => {
   const {
     steps,
-    agenciesText,
+    institutions,
   } = useContext(ComplaintContext);
 
   const lText = useMemo(() => {
     const text = [...listenText];
     text[0] = `${text[0].replaceAll(':steps', steps)}`;
-    text[2] = `${text[2]}${agenciesText}`;
+    text[2] = `${text[2]}${institutions}`;
 
     return text;
   }, []);
@@ -103,7 +103,7 @@ const ComplaintSuccessScreen = ({
 
             <Text style={styles.infoText}>
               {'\r\n'}<Text style={styles.infoTextBold}>
-                {agenciesText}
+                {institutions}
               </Text>
             </Text>
           </View>

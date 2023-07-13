@@ -1,6 +1,7 @@
 import React, {
   useMemo,
   useState,
+  useEffect,
   useContext,
   useCallback,
 } from 'react';
@@ -14,6 +15,7 @@ import { ScaledSheet } from 'react-native-size-matters/extend';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import style from '~/components/complaint/style';
+import useLoadingView from '~/hooks/use-loading-view';
 import { NetInfoContext } from '~/context/NetInfoContext';
 import { ComplaintContext } from '~/context/ComplaintContext';
 
@@ -62,13 +64,21 @@ const ComplaintPreviewScreen = ({
     location,
     locationName,
     locationToName,
-    agenciesText,
+    institutions,
+    institutionsLoading,
     submit,
     setComplaintStep,
+    getInstitutionsAsync,
   } = useContext(ComplaintContext);
 
   const [loading, setLoading] = useState(false);
   const { isConnected } = useContext(NetInfoContext);
+
+  useLoadingView(institutionsLoading);
+
+  useEffect(() => {
+    getInstitutionsAsync();
+  }, []);
 
   const getDetailsText = useCallback((detail) => {
     if (detail !== 'other') {
@@ -109,7 +119,7 @@ const ComplaintPreviewScreen = ({
   const lText = useMemo(() => {
     const text = [...listenText];
     text[0] = `${text[0].replace(':step', step).replace(':steps', steps)}`;
-    text[2] = `${text[2]} ${agenciesText}`;
+    text[2] = `${text[2]} ${institutions}`;
 
     text.push(`Mă numesc ${name} `);
 
@@ -159,7 +169,7 @@ const ComplaintPreviewScreen = ({
     text.push('Trimite');
 
     return text;
-  }, []);
+  }, [institutions]);
 
   const handleNext = async () => {
     if (!isConnected) {
@@ -235,7 +245,7 @@ const ComplaintPreviewScreen = ({
 
           <View style={styles.info}>
             <Text style={styles.infoText}>
-              Verifică conținutul plângerii și când ești sigur/ă că vrei să o trimiți, apasă <Text style={styles.infoTextBold}>Trimite.</Text> Odată trimisă, ea va ajunge direct la <Text style={styles.infoTextBold}>{agenciesText}</Text>
+              Verifică conținutul plângerii și când ești sigur/ă că vrei să o trimiți, apasă <Text style={styles.infoTextBold}>Trimite.</Text> Odată trimisă, ea va ajunge direct la <Text style={styles.infoTextBold}>{institutions}</Text>
             </Text>
           </View>
 

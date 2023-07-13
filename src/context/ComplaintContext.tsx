@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ComplaintUtil } from '~/utils';
 import agencies from '~/constants/agencies';
 import useWithReducer from '~/hooks/use-with-reducer';
+import { getInstitutions } from '~/services/complaint-service';
 
 const complaintState = {
   name: '',
@@ -30,6 +31,9 @@ const initialState = {
   dataShown: false,
   triedSubmit: false,
   disclaimerShown: false,
+
+  institutionsList: [],
+  institutionsLoading: true,
 };
 
 export const ComplaintContext = createContext({});
@@ -91,6 +95,27 @@ export const ComplaintProvider = ({
 
     return locationTo?.label || locationTo?.name || '';
   }, [state.locationTo]);
+
+  const institutions = useMemo(() => {
+    let text = '';
+    
+    if (state.institutionsLoading) {
+      return text;
+    }
+
+    if (state.institutionsList.length) {
+      text = state.institutionsList.join(', ');
+      text = `${text}.`;
+    } else {
+      text = agenciesText;
+    }
+
+    return text;
+  }, [
+    agenciesText,
+    state.institutionsList,
+    state.institutionsLoading
+  ]);
 
   const setComplaint = (complaint) => {
     setState({
@@ -159,6 +184,7 @@ export const ComplaintProvider = ({
       newState = {
         ...initialState,
         type,
+        victim: state.victim,
       }; 
     }
 
@@ -219,6 +245,37 @@ export const ComplaintProvider = ({
     setState({ uploads });
   };
 
+  const getInstitutionsAsync = async () => {
+    if (!state.institutionsLoading) {
+      setState({
+        ...state,
+        institutionsLoading: true,
+      });
+    }
+
+    try {
+      const params = {
+        lat: state.lat,
+        lng: state.lng,
+        type: state.type,
+        victim: state.victim,
+        location_id: state.location?.id || null,
+      };
+
+      const institutionsList = await getInstitutions(params);
+      setState({
+        ...state,
+        institutionsList,
+        institutionsLoading: false,
+      });
+    } catch (error) {
+      setState({
+        ...state,
+        institutionsLoading: false,
+      });
+    }
+  };
+
   const submit = async () => {
     return await ComplaintUtil.create(state);
   };
@@ -229,6 +286,7 @@ export const ComplaintProvider = ({
     locationName,
     agenciesText,
     locationToName,
+    institutions,
 
     setCoords,
     setComplaint,
@@ -244,6 +302,7 @@ export const ComplaintProvider = ({
     setProofType,
     setUploads,
     setComplaintStep,
+    getInstitutionsAsync,
 
     submit,
   }), [state]);
