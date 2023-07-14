@@ -22,6 +22,8 @@ const PhoneButton = ({
       return;
     }
 
+    phone = phone.replace(/\s/g, '');
+
     try {
       await Linking.openURL(`tel:${phone}`);
     } catch (error) {}

@@ -35,24 +35,22 @@
 			</dict>
 		</dict>
 	</dict>
-
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Permisiunile pentru Apple Music vor fi folosite doar pentru a putea asculta conținut audio în timp ce folosești aplicația.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Permisiunile pentru camera foto vor fi folosite doar pentru ca tu să poți încărca dovezile necesare.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Permisiunile pentru microfon vor fi folosite doar pentru a putea dicta în cazul în care nu poți tasta.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Permisiunile pentru galeria foto vor fi folosite doar pentru ca tu să poți încărca dovezile necesare.</string>
-	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Permisiunile pentru recunoașterea vorbirii vor fi folosite doar pentru a putea dicta în cazul în care nu poți tasta.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Permisiunile pentru locație vor fi folosite doar pentru identifica în care centru sau spital te afli.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Permisiunile pentru locație vor fi folosite doar pentru identifica în care centru sau spital te afli.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Permisiunile pentru locație vor fi folosite doar pentru identifica în care centru sau spital te afli.</string>
-
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Permisiunile pentru microfon vor fi folosite doar pentru a putea dicta în cazul în care nu poți tasta.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Permisiunile pentru galeria foto vor fi folosite doar pentru ca tu să poți încărca dovezile necesare.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Permisiunile pentru recunoașterea vorbirii vor fi folosite doar pentru a putea dicta în cazul în care nu poți tasta.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Montserrat-Black.ttf</string>

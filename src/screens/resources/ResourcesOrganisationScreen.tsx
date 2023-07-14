@@ -148,6 +148,7 @@ export default ResourcesOrganisationScreen;
 const styles = ScaledSheet.create({
   container: {
     flexGrow: 1,
+    paddingBottom: '30@vs',
     paddingHorizontal: '24@s',
   },
   buttonContainer: {
