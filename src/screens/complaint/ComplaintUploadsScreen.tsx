@@ -22,8 +22,10 @@ import ScreenActions from '~/components/shared/screens/ScreenActions';
 import ComplaintUploads from '~/components/complaint/ComplaintUploads';
 import ScreenContainer from '~/components/shared/screens/ScreenContainer';
 
+const currentStep = 6;
+
 const listenText = [
-  'Pasul 5 din ',
+  `Pasul ${currentStep} din `,
   'Încarcă dovezile',
   'Încarcă dovada',
   'Poate fi o poză, un videoclip, o înregistrare, un document sau orice alt fișier',
@@ -58,7 +60,7 @@ const ComplaintUploadsScreen = ({
   }, []);
 
   useEffect(() => {
-    if (route?.params?.step === 6) {
+    if (route?.params?.step > currentStep) {
       navigation.navigate('ComplaintPreview');
     }
   }, [route?.params]);
@@ -93,7 +95,8 @@ const ComplaintUploadsScreen = ({
   };
 
   const handleNext = () => {
-    setComplaintStep({ step: 6 });
+    const nextStep = currentStep + 1;
+    setComplaintStep({ step: nextStep });
 
     navigation.navigate('ComplaintPreview');
   };
@@ -107,8 +110,8 @@ const ComplaintUploadsScreen = ({
       >
         <View style={styles.content}>
           <FormStepper
-            step={5}
             steps={steps}
+            step={currentStep}
           />
 
           <View style={styles.title}>

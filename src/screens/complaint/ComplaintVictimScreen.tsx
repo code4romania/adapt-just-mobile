@@ -28,7 +28,7 @@ const listenText = [
   'Pentru mine',
   'Am eu o problemă și am nevoie de ajutor',
   'Pentru altcineva',
-  'Are altcineva o problemă și vreau să îl o ajut',
+  'Are altcineva o problemă și vreau să îl sau o ajut',
   'Dacă tu ești în pericol sau altă persoană este în pericol, sună urgent la 1 1 2',
 ];
 
@@ -138,7 +138,7 @@ const ComplaintVictimScreen = ({
             ]}
             onPress={callEmergency}
           >
-            sună urgent la 112
+            sună urgent la 112.
           </Text>
         </View>
       </ScrollView>

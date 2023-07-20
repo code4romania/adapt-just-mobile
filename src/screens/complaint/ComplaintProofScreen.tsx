@@ -19,8 +19,10 @@ import ScreenActions from '~/components/shared/screens/ScreenActions';
 import ScreenContainer from '~/components/shared/screens/ScreenContainer';
 import FormRadioButton from '~/components/shared/buttons/FormRadioButton';
 
+const currentStep = 5;
+
 const listenText = [
-  'Pasul 4 din ',
+  `Pasul ${currentStep} din `,
   'Ai dovezi ?',
   'Dovezile pot fi orice poză, videoclip sau înregistrare',
   'Da și le pot atașa acum',
@@ -56,7 +58,7 @@ const ComplaintProofScreen = ({
   }, [route?.params]);
 
   const goNextStep = (step) => {
-    if (step > 4) {
+    if (step > currentStep) {
       if (proofType !== 'yes') {
         navigation.navigate('ComplaintPreview', { step });
       } else {
@@ -66,11 +68,14 @@ const ComplaintProofScreen = ({
   };
 
   const handleNext = () => {
+    const step = currentStep + 1;
+    const nextStep = step + 1;
+
     if (proofType === 'yes') {
-      setComplaintStep({ step: 5 });
+      setComplaintStep({ step });
       navigation.navigate('ComplaintUploads');
     } else {
-      setComplaintStep({ step: 6 });
+      setComplaintStep({ step: nextStep });
       navigation.navigate('ComplaintPreview');
     }
   };
@@ -84,8 +89,8 @@ const ComplaintProofScreen = ({
       >
         <View style={styles.content}>
           <FormStepper
-            step={4}
             steps={steps}
+            step={currentStep}
           />
 
           <View style={styles.title}>

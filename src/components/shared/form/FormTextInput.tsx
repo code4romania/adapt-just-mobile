@@ -55,7 +55,7 @@ const FormTextInput = ({
           style={styles.clearButton}
           onPress={() => onChange('')}
         >
-          <Text style={styles.clearButtonText}>
+          <Text style={styles.clearText}>
             x
           </Text>
         </TouchableOpacity>
@@ -117,7 +117,7 @@ const styles = ScaledSheet.create({
     justifyContent: 'center',
     backgroundColor: '#9CA3AF',
   },
-  clearButtonText: {
+  clearText: {
     color: '#FFFFFF',
     fontSize: '12@msr',
     lineHeight: '12@msr',

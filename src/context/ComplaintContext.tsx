@@ -10,6 +10,7 @@ import useWithReducer from '~/hooks/use-with-reducer';
 import { getInstitutions } from '~/services/complaint-service';
 
 const complaintState = {
+  cnp: '',
   name: '',
   type: '',           // hurt, move, evaluation
   lat: null,
@@ -19,9 +20,11 @@ const complaintState = {
   details: [],
   uploads: [],
   proofType: '',      // yes, later, no
+  signature: null,
   location: null,
   locationTo: null,
   locationToType: '', // location, none
+  idCardUpload: null,
 };
 
 const initialState = {
@@ -44,14 +47,14 @@ export const ComplaintProvider = ({
   const [state, setState] = useWithReducer(initialState);
 
   const steps = useMemo(() => {
-    let steps = 7;
+    let steps = 9;
 
     switch (state.type) {
       case 'move':
-        steps = 6;
+        steps = 8;
         break;
       case 'evaluation':
-        steps = 4;
+        steps = 6;
         break;
       default:
         break;
@@ -195,6 +198,10 @@ export const ComplaintProvider = ({
     setState(newState);
   };
 
+  const setCnp = (cnp) => {
+    setState({ cnp });
+  };
+
   const setName = (name) => {
     setState({ name });
   };
@@ -245,6 +252,14 @@ export const ComplaintProvider = ({
     setState({ uploads });
   };
 
+  const setSignature = (signature) => {
+    setState({ signature });
+  };
+
+  const setIdCardUpload = (idCardUpload) => {
+    setState({ idCardUpload });
+  };
+
   const getInstitutionsAsync = async () => {
     if (!state.institutionsLoading) {
       setState({
@@ -288,6 +303,7 @@ export const ComplaintProvider = ({
     locationToName,
     institutions,
 
+    setCnp,
     setCoords,
     setComplaint,
     resetComplaint,
@@ -301,6 +317,8 @@ export const ComplaintProvider = ({
     setReason,
     setProofType,
     setUploads,
+    setSignature,
+    setIdCardUpload,
     setComplaintStep,
     getInstitutionsAsync,
 

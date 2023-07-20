@@ -26,14 +26,16 @@ import ScreenActions from '~/components/shared/screens/ScreenActions';
 import ScreenContainer from '~/components/shared/screens/ScreenContainer';
 import FormCheckButton from '~/components/shared/buttons/FormCheckButton';
 
+const currentStep = 4;
+
 const listenText = [
-  'Pasul 3 din ',
+  `Pasul ${currentStep} din `,
   'Ce ai pățit ?',
   'Alege toate variantele care ți se aplică',
-  'Am fost bătut bătută',
-  'Am fost abuzat abuzată sexual',
-  'Am fost sedat sedată',
-  'Am fost pedepsit pedepsită',
+  'Am fost bătut sau bătută',
+  'Am fost violat sau violată',
+  'Am fost sedat sau sedată',
+  'Am fost legat sau legată',
   'Altceva',
   'Înapoi',
   'Continuă',
@@ -80,7 +82,7 @@ const ComplaintDetailsScreen = ({
   }, [route]);
 
   const goNextStep = (step) => {
-    if (step > 3) {
+    if (step > currentStep) {
       navigation.navigate('ComplaintProof', { step });
     }
   };
@@ -107,7 +109,7 @@ const ComplaintDetailsScreen = ({
   };
 
   const handleNext = () => {
-    setComplaintStep({ step: 4 });
+    setComplaintStep({ step: currentStep + 1 });
     navigation.navigate('ComplaintProof');
   };
 
@@ -120,8 +122,8 @@ const ComplaintDetailsScreen = ({
       >
         <View style={styles.content}>
           <FormStepper
-            step={3}
             steps={steps}
+            step={currentStep}
           />
 
           <View style={styles.title}>
@@ -143,7 +145,7 @@ const ComplaintDetailsScreen = ({
             />
             <FormCheckButton
               icon={abusedIcon}
-              title="Am fost abuzat/ă sexual"
+              title="Am fost violat/ă"
               checked={details.includes('abused')}
               onPress={() => handleChange('abused')}
             />
@@ -155,7 +157,7 @@ const ComplaintDetailsScreen = ({
             />
             <FormCheckButton
               icon={punishedIcon}
-              title="Am fost pedepsit/ă"
+              title="Am fost legat/ă"
               checked={details.includes('punished')}
               onPress={() => handleChange('punished')}
             />

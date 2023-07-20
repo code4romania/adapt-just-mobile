@@ -13,6 +13,7 @@ import ComplaintVictimScreen from '~/screens/complaint/ComplaintVictimScreen';
 import ComplaintDisclaimerScreen from '~/screens/complaint/ComplaintDisclaimerScreen';
 
 // Form screens
+import ComplaintCNPScreen from '~/screens/complaint/ComplaintCNPScreen';
 import ComplaintNameScreen from '~/screens/complaint/ComplaintNameScreen';
 import ComplaintProofScreen from '~/screens/complaint/ComplaintProofScreen';
 import ComplaintReasonScreen from '~/screens/complaint/ComplaintReasonScreen';
@@ -21,6 +22,7 @@ import ComplaintSuccessScreen from '~/screens/complaint/ComplaintSuccessScreen';
 import ComplaintUploadsScreen from '~/screens/complaint/ComplaintUploadsScreen';
 import ComplaintDetailsScreen from '~/screens/complaint/ComplaintDetailsScreen';
 import ComplaintLocationScreen from '~/screens/complaint/ComplaintLocationScreen';
+import ComplaintSignatureScreen from '~/screens/complaint/ComplaintSignatureScreen';
 import ComplaintLocationToScreen from '~/screens/complaint/ComplaintLocationToScreen';
 import ComplaintOtherReasonScreen from '~/screens/complaint/ComplaintOtherReasonScreen';
 import ComplaintMovingReasonScreen from '~/screens/complaint/ComplaintMovingReasonScreen';
@@ -62,6 +64,10 @@ const ComplaintStack = () => {
           component={ComplaintNameScreen}
         />
         <Stack.Screen
+          name="ComplaintCNP"
+          component={ComplaintCNPScreen}
+        />
+        <Stack.Screen
           name="ComplaintLocation"
           component={ComplaintLocationScreen}
         />
@@ -96,6 +102,10 @@ const ComplaintStack = () => {
         <Stack.Screen
           name="ComplaintPreview"
           component={ComplaintPreviewScreen}
+        />
+        <Stack.Screen
+          name="ComplaintSignature"
+          component={ComplaintSignatureScreen}
         />
         <Stack.Screen
           name="ComplaintSuccess"

@@ -17,6 +17,7 @@ import VideoFullscreen from '~/components/shared/image/VideoFullscreen';
 
 const ComplaintUploads = ({
   uploads = [],
+  title = 'Dovezi adăugate',
   onDelete = (i) => {},
 }) => {
   const [showUpload, setShowUpload] = useState(null);
@@ -89,7 +90,7 @@ const ComplaintUploads = ({
   return (
     <View>
       <Text style={styles.title}>
-        Dovezi adăugate
+        {title}
       </Text>
 
       <View style={styles.container}>

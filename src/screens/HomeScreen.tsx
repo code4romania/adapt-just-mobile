@@ -74,10 +74,7 @@ const HomeScreen = ({
   const checkComplaint = async () => {
     const complaint = JSON.parse(complaintRef.current);
 
-    if (
-      complaint?.triedSubmit &&
-      complaint?.step === complaint?.steps - 1
-    ) {
+    if (complaint?.triedSubmit) {
       const newUploads = [];
       let uploads = complaint.uploads;
 
@@ -94,6 +91,15 @@ const HomeScreen = ({
         uploads = uploads.filter(upload => upload?.id);
         uploads = [...uploads, ...newUploads];
         complaint.uploads = uploads;
+
+        if (complaint.idCardUpload) {
+          if (!complaint.idCardUpload?.id) {
+            const newUpload = await UploadUtil.uploadFile(complaint.idCardUpload);
+            if (newUpload) {
+              complaint.idCardUpload = newUpload;
+            }
+          }
+        }
 
         try {
           await ComplaintUtil.create(complaint);

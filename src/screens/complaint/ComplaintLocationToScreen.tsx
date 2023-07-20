@@ -21,8 +21,10 @@ import ScreenContainer from '~/components/shared/screens/ScreenContainer';
 import FormRadioButton from '~/components/shared/buttons/FormRadioButton';
 import ComplaintLocationButton from '~/components/complaint/ComplaintLocationButton';
 
+const currentStep = 4;
+
 const listenText = [
-  'Pasul 3 din ',
+  `Pasul ${currentStep} din `,
   'Unde vrei să te muți ?',
   'Alege numele localității și al spitalului sau al centrului în care vrei să te muți',
   'Caută o locație',
@@ -59,7 +61,7 @@ const ComplaintLocationToScreen = ({
   }, [locationTo]);
 
   useEffect(() => {
-    if (route?.params?.step > 3) {
+    if (route?.params?.step > currentStep) {
       navigation.navigate('ComplaintMovingReason', {
         step: route?.params?.step,
       });
@@ -75,7 +77,8 @@ const ComplaintLocationToScreen = ({
   };
 
   const handleNext = () => {
-    setComplaintStep({ step: 4 });
+    const nextStep = currentStep + 1;
+    setComplaintStep({ step: nextStep });
     navigation.navigate('ComplaintMovingReason');
   };
 
@@ -88,8 +91,8 @@ const ComplaintLocationToScreen = ({
       >
         <View style={styles.content}>
           <FormStepper
-            step={3}
             steps={steps}
+            step={currentStep}
           />
 
           <View style={styles.title}>

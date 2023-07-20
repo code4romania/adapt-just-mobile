@@ -1,6 +1,5 @@
 import React, {
   useMemo,
-  useState,
   useEffect,
   useContext,
   useCallback,
@@ -8,15 +7,12 @@ import React, {
 import {
   View,
   Text,
-  Alert,
   ScrollView,
 } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters/extend';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import style from '~/components/complaint/style';
 import useLoadingView from '~/hooks/use-loading-view';
-import { NetInfoContext } from '~/context/NetInfoContext';
 import { ComplaintContext } from '~/context/ComplaintContext';
 
 import FormStepper from '~/components/shared/form/FormStepper';
@@ -25,10 +21,10 @@ import ScreenActions from '~/components/shared/screens/ScreenActions';
 import ScreenContainer from '~/components/shared/screens/ScreenContainer';
 
 const listenOptions = {
-  beaten: 'Am fost bătut bătută',
-  abused: 'Am fost abuzat abuzată sexual',
+  beaten: 'Am fost bătut sau bătută',
+  abused: 'Am fost violat sau violată',
   sedated: 'Am fost sedat sedată',
-  punished: 'Am fost pedepsit pedepsită',
+  punished: 'Am fost legat sau legată',
 
   move: 'Vreau să fiu mutat mutată la',
   evaluation: 'Vreau să fiu evaluat evaluată din nou',
@@ -36,9 +32,9 @@ const listenOptions = {
 
 const options = {
   beaten: 'Am fost bătut/ă',
-  abused: 'Am fost abuzat/ă sexual',
+  abused: 'Am fost violat/ă',
   sedated: 'Am fost sedat/ă',
-  punished: 'Am fost pedepsit/ă',
+  punished: 'Am fost legat/ă',
 
   move: 'Vreau să fiu mutat/ă la',
   evaluation: 'Vreau să fiu evaluat/ă din nou',
@@ -54,6 +50,7 @@ const ComplaintPreviewScreen = ({
   navigation,
 }) => {
   const {
+    cnp,
     type,
     name,
     steps,
@@ -66,13 +63,10 @@ const ComplaintPreviewScreen = ({
     locationToName,
     institutions,
     institutionsLoading,
-    submit,
-    setComplaintStep,
     getInstitutionsAsync,
   } = useContext(ComplaintContext);
 
-  const [loading, setLoading] = useState(false);
-  const { isConnected } = useContext(NetInfoContext);
+  const step = steps - 2;
 
   useLoadingView(institutionsLoading);
 
@@ -114,14 +108,16 @@ const ComplaintPreviewScreen = ({
     }
   }, []);
 
-  const step = steps - 1;
-
   const lText = useMemo(() => {
     const text = [...listenText];
     text[0] = `${text[0].replace(':step', step).replace(':steps', steps)}`;
     text[2] = `${text[2]} ${institutions}`;
 
     text.push(`Mă numesc ${name} `);
+    if (cnp) {
+      const newCnp = `${cnp.split('').join(' ')}`;
+      text.push(`, C N P, ${newCnp}`);
+    }
 
     if (victim === 'other') {
       let victimText = 'și declar că';
@@ -171,56 +167,8 @@ const ComplaintPreviewScreen = ({
     return text;
   }, [institutions]);
 
-  const handleNext = async () => {
-    if (!isConnected) {
-      setComplaintStep({
-        step,
-        triedSubmit: true,
-      });
-
-      Alert.alert(
-        'Fără conexiune la internet'.toUpperCase(),
-        'Pentru a putea trimite plângerea, trebuie fii conectat la internet. Odată ce conexiunea este restabilită, plângerea se va trimite automat.'.toUpperCase(),
-        [
-          {
-            text: 'AM ÎNȚELES',
-            style: 'cancel',
-            onPress: () => navigateHome(),
-          },
-        ],
-      );
-
-      return;
-    }
-
-    await submitComplaint();
-  };
-
-  const submitComplaint = async () => {
-    setLoading(true);
-
-    try {
-      await submit();
-      await AsyncStorage.removeItem('@complaint');
-      navigation.navigate('ComplaintSuccess');
-    } catch (error) {
-      Alert.alert(
-        'Eroare'.toUpperCase(),
-        'A apărut o eroare la trimiterea plângerii. Te rugăm să încerci mai târziu.'.toUpperCase(),
-        [
-          {
-            text: 'AM ÎNȚELES',
-            style: 'cancel',
-          },
-        ],
-      );
-
-      setLoading(false);
-    }
-  };
-
-  const navigateHome = () => {
-    navigation.navigate('Home');
+  const handleNext = () => {
+    navigation.navigate('ComplaintSignature');
   };
 
   return (
@@ -252,6 +200,12 @@ const ComplaintPreviewScreen = ({
           <View style={styles.summary}>
             <Text style={styles.summaryText}>
               Mă numesc <Text style={styles.summaryHighlight}>{name}</Text>
+              {!!cnp && (
+                <>
+                  {', CNP '} <Text style={styles.summaryHighlight}>{cnp}</Text>
+                </>
+              )}
+
               {victim === 'other' && (
                 <>
                   {' și declar că'}
@@ -356,7 +310,6 @@ const ComplaintPreviewScreen = ({
 
       <View style={styles.actionsContainer}>
         <ScreenActions
-          loading={loading}
           nextText="Trimite"
           onNext={handleNext}
         />

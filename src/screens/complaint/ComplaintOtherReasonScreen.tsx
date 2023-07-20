@@ -20,8 +20,10 @@ import FormTextInput from '~/components/shared/form/FormTextInput';
 import ScreenActions from '~/components/shared/screens/ScreenActions';
 import ScreenContainer from '~/components/shared/screens/ScreenContainer';
 
+const currentStep = 4;
+
 const listenText = [
-  'Pasul 3 din ',
+  `Pasul ${currentStep} din `,
   'Ce s-a întâmplat ?',
   'Scrie în casetă ceea ce vrei să raportezi',
   'Scrie aici',
@@ -53,7 +55,7 @@ const ComplaintOtherReasonScreen = ({
   }, [reason]);
 
   useEffect(() => {
-    if (route?.params?.step > 3) {
+    if (route?.params?.step > currentStep) {
       navigation.navigate('ComplaintProof', {
         step: route?.params?.step,
       });
@@ -67,7 +69,7 @@ const ComplaintOtherReasonScreen = ({
   };
 
   const handleNext = () => {
-    setComplaintStep({ step: 4 });
+    setComplaintStep({ step: currentStep + 1 });
     navigation.navigate('ComplaintProof');
   };
 
@@ -80,8 +82,8 @@ const ComplaintOtherReasonScreen = ({
       >
         <View style={styles.content}>
           <FormStepper
-            step={3}
             steps={steps}
+            step={currentStep}
           />
 
           <View style={styles.title}>

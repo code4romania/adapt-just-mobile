@@ -26,8 +26,10 @@ import ScreenActions from '~/components/shared/screens/ScreenActions';
 import ScreenContainer from '~/components/shared/screens/ScreenContainer';
 import ComplaintLocationButton from '~/components/complaint/ComplaintLocationButton';
 
+const currentStep = 3;
+
 const listenText = [
-  'Pasul 2 din ',
+  `Pasul ${currentStep} din `,
   'Unde te afli acum ?',
   'Alege numele localității și al spitalului sau al centrului',
   'Caută o locație',
@@ -104,7 +106,7 @@ const ComplaintLocationScreen = ({
   }, [route?.params]);
 
   const goNextStep = (step) => {
-    if (step > 2) {
+    if (step > currentStep) {
       let screen = '';
 
       if (victim === 'other') {
@@ -180,7 +182,7 @@ const ComplaintLocationScreen = ({
   };
 
   const handleNext = () => {
-    setComplaintStep({ step: 3 });
+    setComplaintStep({ step: currentStep + 1 });
 
     if (!type) {
       navigation.navigate('ComplaintOtherReason'); 
@@ -206,8 +208,8 @@ const ComplaintLocationScreen = ({
       >
         <View style={styles.content}>
           <FormStepper
-            step={2}
             steps={steps}
+            step={currentStep}
           />
 
           <View style={styles.title}>

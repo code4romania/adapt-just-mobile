@@ -20,8 +20,10 @@ import FormTextInput from '~/components/shared/form/FormTextInput';
 import ScreenActions from '~/components/shared/screens/ScreenActions';
 import ScreenContainer from '~/components/shared/screens/ScreenContainer';
 
+const currentStep = 5;
+
 const listenText = [
-  'Pasul 4 din ',
+  `Pasul ${currentStep} din `,
   'De ce vrei să te muți ?',
   'Scrie în casetă de ce vrei să te muți',
   'Scrie aici',
@@ -53,19 +55,19 @@ const ComplaintMovingReasonScreen = ({
   }, [reason]);
 
   useEffect(() => {
-    if (route?.params?.step > 4) {
+    if (route?.params?.step > currentStep) {
       navigation.navigate('ComplaintPreview');
     }
   }, [route?.params]);
 
   const handleRecording = (result = '') => {
     result = result.toUpperCase().trim();
-    
     setReason(result);
   };
 
   const handleNext = () => {
-    setComplaintStep({ step: 5 });
+    const nextStep = currentStep + 1;
+    setComplaintStep({ step: nextStep });
     navigation.navigate('ComplaintPreview');
   };
 
@@ -78,8 +80,8 @@ const ComplaintMovingReasonScreen = ({
       >
         <View style={styles.content}>
           <FormStepper
-            step={4}
             steps={steps}
+            step={currentStep}
           />
 
           <View style={styles.title}>

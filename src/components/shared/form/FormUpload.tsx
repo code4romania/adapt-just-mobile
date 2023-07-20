@@ -97,10 +97,6 @@ const FormUpload = ({
         style={styles.icon}
       />
 
-      {/* <Image
-        source={uploadIcon}
-        style={styles.icon}
-      /> */}
       <Text style={styles.title}>
         {title}
       </Text>

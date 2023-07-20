@@ -20,8 +20,10 @@ import FormTextInput from '~/components/shared/form/FormTextInput';
 import ScreenActions from '~/components/shared/screens/ScreenActions';
 import ScreenContainer from '~/components/shared/screens/ScreenContainer';
 
+const currentStep = 1;
+
 const listenText = [
-  'Pasul 1 din ',
+  `Pasul ${currentStep} din `,
   'Cum te cheamă ?',
   'Scrie numele mic și numele de familie',
   'Nume și prenume',
@@ -36,7 +38,6 @@ const ComplaintNameScreen = ({
 }) => {
   const {
     name,
-    type,
     steps,
     setName,
     setComplaintStep,
@@ -64,8 +65,8 @@ const ComplaintNameScreen = ({
   }, [route?.params]);
 
   const goNextStep = (step) => {
-    if (step > 1) {
-      navigation.navigate('ComplaintLocation', { step });
+    if (step > currentStep) {
+      navigation.navigate('ComplaintCNP', { step });
     }
   };
 
@@ -75,8 +76,8 @@ const ComplaintNameScreen = ({
   };
 
   const handleNext = () => {
-    setComplaintStep({ step: 2 });
-    navigation.navigate('ComplaintLocation');
+    setComplaintStep({ step: currentStep + 1 });
+    navigation.navigate('ComplaintCNP');
   };
 
   return (
@@ -88,8 +89,8 @@ const ComplaintNameScreen = ({
       >
         <View style={styles.content}>
           <FormStepper
-            step={1}
             steps={steps}
+            step={currentStep}
           />
 
           <View style={styles.title}>
