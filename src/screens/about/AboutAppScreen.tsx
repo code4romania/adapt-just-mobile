@@ -63,7 +63,7 @@ const AboutAppScreen = ({
           />
 
           <AboutAppButton
-            title="Finanțare și parteneri"
+            title="Implementare"
             onPress={navigateFundingAndPartners}
           />
 

@@ -91,7 +91,7 @@ const styles = ScaledSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   content: {
-    paddingTop: '150@vs',
+    paddingTop: '130@vs',
     paddingHorizontal: '20@s',
   },
   timeText: {
@@ -109,15 +109,15 @@ const styles = ScaledSheet.create({
     zIndex: 1,
     color: '#264667',
     fontSize: '30@msr',
-    marginTop: '10@vs',
     fontFamily: 'Montserrat-Bold',
   },
   helpContainer: {
-    marginTop: '15@vs',
+    marginTop: '10@vs',
   },
   helpText: {
+    zIndex: 1,
     color: '#264667',
-    fontSize: '16@msr',
+    fontSize: '15@msr',
     lineHeight: '20@msr',
     textTransform: 'uppercase',
     fontVariant: ['small-caps'],
@@ -126,9 +126,11 @@ const styles = ScaledSheet.create({
   closeButton: {
     right: 0,
     bottom: 0,
+    zIndex: -1,
     position: 'absolute',
   },
   closeImage: {
     width: '250@s',
+    height: '260@s',
   },
 });

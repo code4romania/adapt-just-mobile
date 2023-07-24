@@ -45,8 +45,6 @@ const AboutProjectScreen = () => {
       text.push('Descriere');
       text.push(shortContent[0].replace('/', ''));
       text.push(shortContent[1].replace('/', ''));
-      text.push('Finanțare');
-      text.push(shortContent[2].replace('/', ''));
     }
 
     return text;
@@ -111,7 +109,7 @@ const styles = ScaledSheet.create({
     paddingHorizontal: '38@s',
   },
   content: {
-    marginTop: '40@vs',
+    marginTop: '25@vs',
     paddingHorizontal: '30@s',
   },
   shortContent: {

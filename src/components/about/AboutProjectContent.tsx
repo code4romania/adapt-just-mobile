@@ -11,7 +11,10 @@ const AboutProjectContent = () => {
   return (
     <View>
       <Text style={styles.text}>
-        {content[0]}. {content[1]}.
+        {content[0]}.
+      </Text>
+      <Text style={styles.text}>
+        {content[1]}.
       </Text>
       <Text style={styles.text}>
         {content[2]}. {content[3]}. {content[4]}. {content[5]}.
@@ -26,6 +29,7 @@ const styles = ScaledSheet.create({
   text: {
     color: '#000',
     fontSize: '16@msr',
+    lineHeight: '21@msr',
     fontFamily: 'EncodeSans-Regular'
   },
 });

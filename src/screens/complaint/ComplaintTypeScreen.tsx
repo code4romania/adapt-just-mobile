@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   complaintHurtIcon,
   complaintMoveIcon,
-  complaintEvaluationIcon,
+  complaintJudgeIcon,
 } from '~/assets/images';
 import { ComplaintContext } from '~/context/ComplaintContext';
 
@@ -142,7 +142,7 @@ const ComplaintTypeScreen = ({
           />
           <FormButton
             checked={isEvaluation}
-            icon={complaintEvaluationIcon}
+            icon={complaintJudgeIcon}
             title="Vreau la judecător"
             subtitle="Vreau să ies de sub interdicție"
             onPress={() => handleType('evaluation')}

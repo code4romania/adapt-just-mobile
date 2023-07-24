@@ -24,16 +24,15 @@ import ScreenContainer from '~/components/shared/screens/ScreenContainer';
 
 const listenText = [
   'Înapoi',
-  'Finanțare și parteneri',
-  'Finanțatori',
-  'Iceland Liechtenstein Norway Grants',
-  'Fondul Român de Dezvoltare Socială',
-  'Proiect derulat de',
+  'Implementare',
   'Centrul de Resurse Juridice',
   'În parteneriat cu',
   'Ministerul Public',
   'Dezvoltat cu sprijinul',
   'Code For Romania',
+  'Finanțatori',
+  'Iceland Liechtenstein Norway Grants',
+  'Fondul Român de Dezvoltare Socială',
 ];
 
 const FundingAndPartnersScreen = () => {
@@ -54,50 +53,15 @@ const FundingAndPartnersScreen = () => {
         <View style={styles.titleContainer}>
           <ScreenTitle
             marginTop={vs(25)}
-            title="Finanțare și parteneri"
+            title="Implementare"
           />
         </View>
 
         <View style={styles.content}>
-          <Text style={styles.title}>
-            Finanțatori
-          </Text>
-
-          <View style={styles.info}>
-            <Image
-              source={ilnGrants}
-              style={styles.image}
-              resizeMode="contain"
-            />
-
-            <Text style={styles.text}>
-              {`Iceland\r\nLiechtenstein\r\nNorway Grants`}
-            </Text>
-          </View>
-
-          <View style={styles.info}>
-            <Image
-              source={frds}
-              style={styles.image}
-              resizeMode="contain"
-            />
-
-            <Text style={styles.text}>
-              {`Fondul Român de\r\nDezvoltare Socială`}
-            </Text>
-          </View>
-
-          <Text style={[
-            styles.title,
-            styles.sectionTitle,
-          ]}>
-            Proiect derulat de:
-          </Text>
-
           <View style={styles.info}>
             <Image
               source={crj}
-              style={styles.image}
+              style={styles.crj}
               resizeMode="contain"
             />
 
@@ -106,15 +70,18 @@ const FundingAndPartnersScreen = () => {
             </Text>
           </View>
 
-          <Text style={styles.subtitle}>
+          <Text style={[
+            styles.subtitle,
+            { marginTop: vs(40) }
+          ]}>
             În parteneriat cu:
           </Text>
 
           <View style={styles.info}>
             <Image
-              style={styles.image}
               resizeMode="contain"
               source={ministerulPublic}
+              style={styles.ministerulPublic}
             />
 
             <Text style={styles.text}>
@@ -122,22 +89,62 @@ const FundingAndPartnersScreen = () => {
             </Text>
           </View>
 
-          <Text style={styles.subtitle}>
+          <Text style={[
+            styles.subtitle,
+            { marginBottom: vs(37) }
+          ]}>
             Dezvoltat cu sprijinul:
           </Text>
 
-          <View style={[
-            styles.info,
-            styles.c4r,
-          ]}>
+          <View style={styles.info}>
             <Image
               source={c4r}
-              style={styles.image}
+              style={styles.c4r}
               resizeMode="contain"
             />
 
             <Text style={styles.text}>
               Code For Romania
+            </Text>
+          </View>
+
+          <Text style={[
+            styles.subtitle,
+            { marginTop: vs(45) }
+          ]}>
+            Finanțatori
+          </Text>
+
+          <View style={[
+            styles.info,
+            { marginTop: vs(24) }
+          ]}>
+            <Image
+              source={ilnGrants}
+              resizeMode="contain"
+              style={styles.ilnGrants}
+            />
+
+            <Text style={[
+              styles.text,
+              styles.textSmall,
+            ]}>
+              {`Iceland\r\nLiechtenstein\r\nNorway\r\nGrants`}
+            </Text>
+          </View>
+
+          <View style={styles.info}>
+            <Image
+              source={frds}
+              style={styles.frds}
+              resizeMode="contain"
+            />
+
+            <Text style={[
+              styles.text,
+              styles.textSmall,
+            ]}>
+              {`Fondul Român de\r\nDezvoltare\r\nSocială`}
             </Text>
           </View>
         </View>
@@ -174,13 +181,8 @@ const styles = ScaledSheet.create({
     textTransform: 'uppercase',
     fontFamily: 'EncodeSans-Bold',
   },
-  sectionTitle: {
-    marginTop: '32@vs',
-    marginBottom: '27@vs',
-  },
   subtitle: {
     color: '#111827',
-    marginTop: '32@vs',
     fontSize: '16@msr',
     letterSpacing: '0.4@msr',
     textTransform: 'uppercase',
@@ -190,12 +192,30 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  c4r: {
-    marginTop: '36@vs',
+  crj: {
+    width: '134@s',
+    height: '94@vs',
+    marginRight: '40@s',
   },
-  image: {
-    flex: 1,
+  ministerulPublic: {
+    width: '150@s',
+    height: '150@vs',
+    marginRight: '36@s',
+  },
+  c4r: {
     width: '120@s',
+    height: '37@vs',
+    marginRight: '30@s',
+  },
+  ilnGrants: {
+    width: '93@s',
+    height: '93@vs',
+    marginRight: '24@s',
+  },
+  frds: {
+    width: '93@s',
+    height: '94@vs',
+    marginRight: '24@s',
   },
   text: {
     flex: 1,
@@ -206,5 +226,9 @@ const styles = ScaledSheet.create({
     textTransform: 'uppercase',
     fontVariant: ['small-caps'],
     fontFamily: 'EncodeSans-Regular',
+  },
+  textSmall: {
+    fontSize: '12@msr',
+    lineHeight: '17@msr',
   },
 });

@@ -42,6 +42,7 @@ const FormButton = ({
           {!!icon && (
             <SvgXml
               xml={icon}
+              width={vs(70)}
               height={vs(60)}
             />
           )}

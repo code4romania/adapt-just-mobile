@@ -37,7 +37,7 @@ import complaintMeIcon from './complaint-me-icon.svg';
 import complaintHurtIcon from './complaint-hurt-icon.svg';
 import complaintMoveIcon from './complaint-move-icon.svg';
 import complaintOtherIcon from './complaint-other-icon.svg';
-import complaintEvaluationIcon from './complaint-evaluation-icon.svg';
+import complaintJudgeIcon from './complaint-judge-icon.svg';
 
 // resources
 import phoneIcon from './phone-icon.svg';
@@ -94,7 +94,7 @@ export {
   complaintHurtIcon,
   complaintMoveIcon,
   complaintOtherIcon,
-  complaintEvaluationIcon,
+  complaintJudgeIcon,
 
   phoneIcon,
   lawyerIcon,
