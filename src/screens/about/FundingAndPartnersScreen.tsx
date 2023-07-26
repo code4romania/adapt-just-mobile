@@ -15,6 +15,7 @@ import {
   crj,
   frds,
   ilnGrants,
+  stareaNatiei,
   ministerulPublic,
 } from '~/assets/images';
 
@@ -33,6 +34,8 @@ const listenText = [
   'Finanțatori',
   'Iceland Liechtenstein Norway Grants',
   'Fondul Român de Dezvoltare Socială',
+  'Partener Media',
+  'Starea Nației',
 ];
 
 const FundingAndPartnersScreen = () => {
@@ -147,6 +150,31 @@ const FundingAndPartnersScreen = () => {
               {`Fondul Român de\r\nDezvoltare\r\nSocială`}
             </Text>
           </View>
+
+          <Text style={[
+            styles.subtitle,
+            {
+              marginTop: vs(32),
+              marginBottom: vs(16),
+            }
+          ]}>
+            Partener Media:
+          </Text>
+
+          <View style={styles.info}>
+            <Image
+              resizeMode="contain"
+              source={stareaNatiei}
+              style={styles.stareaNatiei}
+            />
+
+            <Text style={[
+              styles.text,
+              styles.textSmall,
+            ]}>
+              {`Starea Nației`}
+            </Text>
+          </View>
         </View>
       </ScrollView>
     </ScreenContainer>
@@ -216,6 +244,11 @@ const styles = ScaledSheet.create({
     width: '93@s',
     height: '94@vs',
     marginRight: '24@s',
+  },
+  stareaNatiei: {
+    width: '74@s',
+    height: '72@vs',
+    marginRight: '42@s',
   },
   text: {
     flex: 1,

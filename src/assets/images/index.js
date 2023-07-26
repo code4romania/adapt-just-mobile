@@ -52,6 +52,7 @@ import frds from './about/frds.png';
 import hideBg from './about/hide-bg.png';
 import ilnGrants from './about/iln-grants.png';
 import hideButton from './about/hide-button.png';
+import stareaNatiei from './about/starea-natiei.png';
 import listenButton from './about/listen-button.png';
 import complaintName from './about/complaint-name.png';
 import ministerulPublic from './about/ministerul-public.png';
@@ -107,6 +108,7 @@ export {
   hideBg,
   ilnGrants,
   hideButton,
+  stareaNatiei,
   listenButton,
   complaintName,
   ministerulPublic,

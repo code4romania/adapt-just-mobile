@@ -98,8 +98,8 @@ android {
         applicationId "com.adaptjust"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 11
-        versionName "1.2"
+        versionCode 12
+        versionName "1.2.1"
     }
 
     splits {

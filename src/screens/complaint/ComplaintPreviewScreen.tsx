@@ -162,7 +162,7 @@ const ComplaintPreviewScreen = ({
     }
 
     text.push('Înapoi');
-    text.push('Trimite');
+    text.push('Continuă');
 
     return text;
   }, [institutions]);
@@ -310,7 +310,7 @@ const ComplaintPreviewScreen = ({
 
       <View style={styles.actionsContainer}>
         <ScreenActions
-          nextText="Trimite"
+          nextText="Continuă"
           onNext={handleNext}
         />
       </View>
