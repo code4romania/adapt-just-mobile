@@ -46,7 +46,7 @@
     "react-native-size-matters": "^0.4.0",
     "react-native-svg": "^13.9.0",
     "react-native-tts": "^4.1.0",
-    "react-native-video": "^6.0.0-alpha.6",
+    "react-native-video": "^6.0.0-beta.0",
     "react-native-voice": "^0.3.0",
     "react-native-webview": "^13.2.3"
   },

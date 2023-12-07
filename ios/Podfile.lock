@@ -80,9 +80,9 @@ PODS:
   - hermes-engine/Pre-built (0.71.6)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.1100)
-  - PromisesObjC (2.2.0)
-  - PromisesSwift (2.2.0):
-    - PromisesObjC (= 2.2.0)
+  - PromisesObjC (2.3.1)
+  - PromisesSwift (2.3.1):
+    - PromisesObjC (= 2.3.1)
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -350,10 +350,10 @@ PODS:
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
-  - react-native-video (6.0.0-alpha.6):
+  - react-native-video (6.0.0-beta.0):
     - React-Core
-    - react-native-video/Video (= 6.0.0-alpha.6)
-  - react-native-video/Video (6.0.0-alpha.6):
+    - react-native-video/Video (= 6.0.0-beta.0)
+  - react-native-video/Video (6.0.0-beta.0):
     - PromisesSwift
     - React-Core
   - react-native-voice (0.3.0):
@@ -459,7 +459,7 @@ PODS:
     - React-RCTImage
   - RNSVG (13.9.0):
     - React-Core
-  - SocketRocket (0.6.0)
+  - SocketRocket (0.6.1)
   - TextToSpeech (4.1.0):
     - React
   - Yoga (1.14.0)
@@ -692,8 +692,8 @@ SPEC CHECKSUMS:
   hermes-engine: b434cea529ad0152c56c7cb6486b0c4c0b23b5de
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
-  PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
-  PromisesSwift: cf9eb58666a43bbe007302226e510b16c1e10959
+  PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
+  PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 5c6fd63b03abb06947d348dadac51c93e3485bd8
   RCTTypeSafety: 1c66daedd66f674e39ce9f40782f0d490c78b175
@@ -714,7 +714,7 @@ SPEC CHECKSUMS:
   react-native-netinfo: ccbe1085dffd16592791d550189772e13bf479e2
   react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe
   react-native-safe-area-context: b8979f5eda6ed5903d4dbc885be3846ea3daa753
-  react-native-video: fee89269ad07556d960721f3b62e39be6ace3c90
+  react-native-video: e9e6fe3ab11d515bd79abd5d81e07db538943c56
   react-native-voice: 9829ac5dc9300687c5f215bddf6c9645e82923fc
   react-native-webview: b85dfe0bf95bef83e82fc354d6987c80fed5e7ad
   React-perflogger: 43392072a5b867a504e2b4857606f8fc5a403d7f
@@ -737,7 +737,7 @@ SPEC CHECKSUMS:
   RNPermissions: 564f5314a25310cfd3e3f2de264dc8b9d1dc49c4
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
-  SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   TextToSpeech: b3aa777ff5585705f179c0a2436bfd0926d1716e
   Yoga: ba09b6b11e6139e3df8229238aa794205ca6a02a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
