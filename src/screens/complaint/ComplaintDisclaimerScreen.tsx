@@ -24,7 +24,7 @@ const listenText = [
   'Atenție!',
   'Înainte de a completa plângerea, este important să știi că informațiile pe care le vei introduce aici vor fi transmise către ',
   'Doar autoritățile vor ști cine ești și ce le spui.',
-  'Dacă ai întrebări sau ești îngrijorat, cere ajutorul cuiva de încredere. Este important să înțelegi că informațiile pe care le introduci vor fi confidențiale și tratate cu respect.',
+  'Dacă ai întrebări sau ești îngrijorat, cere ajutorul cuiva de încredere.',
   'Ești de acord să continui?',
   'înapoi',
   'Continuă',
@@ -78,7 +78,7 @@ const ComplaintDisclaimerScreen = ({
           <Text style={styles.text}>
             Înainte de a completa plângerea, este important să știi că informațiile pe care le vei introduce aici vor fi transmise către <Text style={styles.textBold}>{agenciesText}</Text> Doar autoritățile vor ști cine ești și ce le spui.{`\r\n`}{`\r\n`}
 
-            Dacă ai întrebări sau ești îngrijorat, cere ajutorul cuiva de încredere. Este important să înțelegi că informațiile pe care le introduci vor fi confidențiale și tratate cu respect.
+            Dacă ai întrebări sau ești îngrijorat, cere ajutorul cuiva de încredere.
           </Text>
         </View>
 
@@ -135,6 +135,7 @@ const styles = ScaledSheet.create({
   },
   askText: {
     color: '#070821',
+    marginTop: '20@vs',
     fontSize: '20@msr',
     letterSpacing: '0.6@msr',
     textTransform: 'uppercase',

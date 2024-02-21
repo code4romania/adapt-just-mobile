@@ -36,6 +36,7 @@ const initialState = {
   disclaimerShown: false,
 
   institutionsList: [],
+  institutionsEmails: [],
   institutionsLoading: true,
 };
 
@@ -64,17 +65,20 @@ export const ComplaintProvider = ({
   }, [state.type]);
 
   const agenciesText = useMemo(() => {
-    let tp = state.type || 'hurt';
-    if (state.victim === 'other') {
-      tp = 'hurt';
+    let type = state.type || 'hurt';
+    const victim = state.victim || 'me';
+
+    if (victim === 'other') {
+      type = 'hurt';
     }
 
-    const text = agencies[tp].map((agency, index) => {
+    const list = agencies[victim][type];
+    const text = list.map((agency, index) => {
       if (index === 0) {
         return agency;
       }
 
-      if (index === agencies[tp].length - 1) {
+      if (index === list.length - 1) {
         return ` și ${agency}.`;
       }
     
@@ -277,10 +281,14 @@ export const ComplaintProvider = ({
         location_id: state.location?.id || null,
       };
 
-      const institutionsList = await getInstitutions(params);
+      const response = await getInstitutions(params);
+      const institutionsEmails = response?.emails || [];
+      const institutionsList = response?.institutions || [];
+      
       setState({
         ...state,
         institutionsList,
+        institutionsEmails,
         institutionsLoading: false,
       });
     } catch (error) {

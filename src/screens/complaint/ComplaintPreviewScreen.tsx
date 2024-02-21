@@ -1,5 +1,6 @@
 import React, {
   useMemo,
+  useState,
   useEffect,
   useContext,
   useCallback,
@@ -8,6 +9,7 @@ import {
   View,
   Text,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 import { ScaledSheet } from 'react-native-size-matters/extend';
 
@@ -19,6 +21,7 @@ import FormStepper from '~/components/shared/form/FormStepper';
 import ScreenTitle from '~/components/shared/screens/ScreenTitle';
 import ScreenActions from '~/components/shared/screens/ScreenActions';
 import ScreenContainer from '~/components/shared/screens/ScreenContainer';
+import ComplaintEmailsModal from '~/components/complaint/ComplaintEmailsModal';
 
 const listenOptions = {
   beaten: 'Am fost bătut sau bătută',
@@ -62,11 +65,13 @@ const ComplaintPreviewScreen = ({
     locationName,
     locationToName,
     institutions,
+    institutionsEmails,
     institutionsLoading,
     getInstitutionsAsync,
   } = useContext(ComplaintContext);
 
   const step = steps - 2;
+  const [emailsVisible, setEmailsVisible] = useState(false);
 
   useLoadingView(institutionsLoading);
 
@@ -113,6 +118,10 @@ const ComplaintPreviewScreen = ({
     text[0] = `${text[0].replace(':step', step).replace(':steps', steps)}`;
     text[2] = `${text[2]} ${institutions}`;
 
+    if (institutionsEmails.length > 0) {
+      text.push('Vezi adresele de email');
+    }
+
     text.push(`Mă numesc ${name} `);
     if (cnp) {
       const newCnp = `${cnp.split('').join(' ')}`;
@@ -155,8 +164,6 @@ const ComplaintPreviewScreen = ({
       }
     }
 
-    text.push('Solicit ca datele mele personale să nu devină publice ca urmare a acestei plângeri, a cărei soluționare o cer.');
-
     if (uploads.length > 0) {
       text.push(`Am atașat plângerii ${uploads.length} fișier${uploads.length > 1 ? 'e' : ''} cu dovezi.`);
     }
@@ -165,7 +172,7 @@ const ComplaintPreviewScreen = ({
     text.push('Continuă');
 
     return text;
-  }, [institutions]);
+  }, [institutions, institutionsEmails]);
 
   const handleNext = () => {
     navigation.navigate('ComplaintSignature');
@@ -195,6 +202,19 @@ const ComplaintPreviewScreen = ({
             <Text style={styles.infoText}>
               Verifică conținutul plângerii și când ești sigur/ă că vrei să o trimiți, apasă <Text style={styles.infoTextBold}>Trimite.</Text> Odată trimisă, ea va ajunge direct la <Text style={styles.infoTextBold}>{institutions}</Text>
             </Text>
+
+            {institutionsEmails.length > 0 && (
+              <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity
+                  style={styles.emailsButton}
+                  onPress={() => setEmailsVisible(true)}
+                >
+                  <Text style={styles.emailsButtonText}>
+                    Vezi adresele de email
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
 
           <View style={styles.summary}>
@@ -276,10 +296,6 @@ const ComplaintPreviewScreen = ({
               </View>
             )}
 
-            <Text style={styles.summaryText}>
-              Solicit ca datele mele personale să nu devină publice ca urmare a acestei plângeri, a cărei soluționare o cer.
-            </Text>
-
             {uploads.length > 0 && (
               <View style={styles.uploadsContainer}>
                 <Text style={styles.summaryText}>
@@ -314,6 +330,12 @@ const ComplaintPreviewScreen = ({
           onNext={handleNext}
         />
       </View>
+
+      <ComplaintEmailsModal
+        visible={emailsVisible}
+        emails={institutionsEmails}
+        onClose={() => setEmailsVisible(false)}
+      />
     </ScreenContainer>
   );
 };
@@ -383,5 +405,19 @@ const styles = ScaledSheet.create({
   },
   movingReason: {
     marginBottom: '20@vs',
+  },
+  emailsButton: {
+    borderWidth: 1,
+    marginTop: '5@vs',
+    borderRadius: '4@msr',
+    borderColor: '#F59E0B',
+    paddingVertical: '10@vs',
+    paddingHorizontal: '16@s',
+  },
+  emailsButtonText: {
+    color: '#111827',
+    fontSize: '16@msr',
+    textTransform: 'uppercase',
+    fontFamily: 'EncodeSans-Bold',
   },
 });
