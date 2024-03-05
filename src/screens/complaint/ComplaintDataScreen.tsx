@@ -16,7 +16,6 @@ const listenText = [
   'Ecran principal',
   'Urmează să completezi informații despre tine',
   'Nu te îngrijora !',
-  'Prin mesajul tău, vom spune autorităților să aibă grijă de datele tale pentru ca tu să fii în siguranță',
   'Înapoi',
   'Continuă',
 ];
@@ -52,10 +51,6 @@ const ComplaintDataScreen = ({
 
           <Text style={[styles.text, styles.textBold]}>
             {`\r\n`}Nu te îngrijora !{`\r\n`}
-          </Text>
-
-          <Text style={styles.text}>
-            Prin mesajul tău, vom spune autorităților să aibă grijă de datele tale pentru ca tu să fii în siguranță.
           </Text>
         </View>
       </ScrollView>
