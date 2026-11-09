@@ -6,6 +6,9 @@ import React, {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import useWithReducer from '~/hooks/use-with-reducer';
+import { storageKey } from '~/utils/app-environment';
+
+const introKey = storageKey('@has_intro');
 
 const initialState = {
   isIntro: false,
@@ -26,7 +29,7 @@ export const IntroProvider = ({
         introCheck,
       } = state;
 
-      const introDone = await AsyncStorage.getItem('@has_intro');
+      const introDone = await AsyncStorage.getItem(introKey);
       if (!introDone) {
         isIntro = true;
       }
@@ -43,7 +46,7 @@ export const IntroProvider = ({
   }, []);
 
   const handleIntro = async () => {
-    await AsyncStorage.setItem('@has_intro', 'true');
+    await AsyncStorage.setItem(introKey, 'true');
     setState({ isIntro: false });
   };
 

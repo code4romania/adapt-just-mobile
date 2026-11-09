@@ -14,6 +14,7 @@ import {
   ComplaintUtil,
 } from '~/utils';
 import useWithReducer from '~/hooks/use-with-reducer';
+import { complaintDraftKey } from '~/utils/app-environment';
 
 const initialState = {
   isConnected: true,
@@ -56,7 +57,7 @@ export const NetInfoProvider = ({ children }) => {
   // };
 
   const checkComplaint = async () => {
-    let complaint = await AsyncStorage.getItem('@complaint');
+    let complaint = await AsyncStorage.getItem(complaintDraftKey);
     if (!complaint) {
       return;
     }
@@ -86,7 +87,7 @@ export const NetInfoProvider = ({ children }) => {
 
         try {
           await ComplaintUtil.create(complaint);
-          await AsyncStorage.removeItem('@complaint');
+          await AsyncStorage.removeItem(complaintDraftKey);
         } catch (error) {}
       }
     }

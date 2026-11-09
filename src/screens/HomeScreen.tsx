@@ -26,6 +26,7 @@ import {
 } from '~/utils';
 import { NetInfoContext } from '~/context/NetInfoContext';
 import { LocationsContext } from '~/context/LocationsContext';
+import { complaintDraftKey } from '~/utils/app-environment';
 
 import HomeMenu from '~/components/home/HomeMenu';
 import ScreenTitle from '~/components/shared/screens/ScreenTitle';
@@ -52,7 +53,7 @@ const HomeScreen = ({
 
   useEffect(() => {
     const getData = async () => {
-      const complaint = await AsyncStorage.getItem('@complaint');
+      const complaint = await AsyncStorage.getItem(complaintDraftKey);
 
       if (!complaint) return;
       complaintRef.current = complaint;
@@ -103,7 +104,7 @@ const HomeScreen = ({
 
         try {
           await ComplaintUtil.create(complaint);
-          await AsyncStorage.removeItem('@complaint');
+          await AsyncStorage.removeItem(complaintDraftKey);
         } catch (error) {}
       }
     }

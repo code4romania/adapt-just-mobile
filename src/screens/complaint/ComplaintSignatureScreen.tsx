@@ -19,6 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import style from '~/components/complaint/style';
 import { NetInfoContext } from '~/context/NetInfoContext';
 import { ComplaintContext } from '~/context/ComplaintContext';
+import { complaintDraftKey, isStaging } from '~/utils/app-environment';
 
 import FormStepper from '~/components/shared/form/FormStepper';
 import ScreenTitle from '~/components/shared/screens/ScreenTitle';
@@ -58,7 +59,23 @@ const ComplaintSignatureScreen = ({
 
   }, [step, steps]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
+    if (isStaging) {
+      Alert.alert(
+        'Trimiți o plângere de test?',
+        'Folosește doar date fictive și fișiere de test. Serverul de test poate trimite e-mailuri reale.',
+        [
+          { text: 'Anulează', style: 'cancel' },
+          { text: 'Trimite testul', onPress: submitOrQueueComplaint },
+        ],
+      );
+      return;
+    }
+
+    return submitOrQueueComplaint();
+  };
+
+  const submitOrQueueComplaint = async () => {
     if (!isConnected) {
       setComplaintStep({
         step,
@@ -88,7 +105,7 @@ const ComplaintSignatureScreen = ({
 
     try {
       await submit();
-      await AsyncStorage.removeItem('@complaint');
+      await AsyncStorage.removeItem(complaintDraftKey);
       navigation.navigate('ComplaintSuccess');
     } catch (error) {
       Alert.alert(

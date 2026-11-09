@@ -120,6 +120,7 @@ android {
     }
     buildTypes {
         debug {
+            applicationIdSuffix ".local"
             signingConfig signingConfigs.debug
         }
         release {

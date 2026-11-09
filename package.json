@@ -6,6 +6,8 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "ios:pods": "node scripts/prepare-ios.cjs && react-native setup-ios-permissions && cd ios && pod install",
+    "test:local-api": "node --test __tests__/api-config.test.cjs",
     "lint": "eslint .",
     "start": "react-native start --reset-cache",
     "test": "jest"
@@ -29,7 +31,7 @@
     "babel-plugin-dotenv-import": "^3.0.1",
     "dayjs": "^1.11.7",
     "react": "18.2.0",
-    "react-native": "0.71.6",
+    "react-native": "0.71.19",
     "react-native-document-picker": "^9.0.1",
     "react-native-file-viewer": "^2.1.5",
     "react-native-fs": "^2.20.0",

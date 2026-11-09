@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import style from '~/components/complaint/style';
 import { ComplaintContext } from '~/context/ComplaintContext';
+import { complaintDraftKey } from '~/utils/app-environment';
 
 import FormStepper from '~/components/shared/form/FormStepper';
 import ScreenTitle from '~/components/shared/screens/ScreenTitle';
@@ -72,7 +73,7 @@ const ComplaintSuccessScreen = ({
   });
 
   const handleNext = async () => {
-    await AsyncStorage.removeItem('@complaint');
+    await AsyncStorage.removeItem(complaintDraftKey);
     navigation.navigate('Home');
   };
 

@@ -1,9 +1,13 @@
 import axios from 'axios';
+import { Platform } from 'react-native';
 import { API_URL } from '@env';
+import { assertApiRequestAllowed, resolveApiUrl } from './api-config';
+import { isStaging } from './app-environment';
 
-const createClient = () => {
+const createClient = (method = 'GET') => {
   return axios.create({
-    baseURL: API_URL,
+    baseURL: resolveApiUrl(API_URL, Platform.OS, __DEV__, isStaging),
+    ...(isStaging && method.toUpperCase() === 'GET' ? { timeout: 15000 } : {}),
     headers: {
       'dataType': `json`,
       'Accept': `application/json`,
@@ -13,7 +17,8 @@ const createClient = () => {
 }
 
 const request = async (options) => {
-  const client = createClient();
+  assertApiRequestAllowed(options, __DEV__, isStaging);
+  const client = createClient(options.method);
 
   const onSuccess = ({ data }) => data;
 

@@ -8,6 +8,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LocationsService } from '~/services';
 import useWithReducer from '~/hooks/use-with-reducer';
 import useLoadingView from '~/hooks/use-loading-view';
+import { storageKey } from '~/utils/app-environment';
+
+const locationsKey = storageKey('@locations');
 
 const initialState = {
   loading: true,
@@ -35,10 +38,10 @@ export const LocationsProvider = ({
       const response = await LocationsService.getLocations();
       locations = response.data;
 
-      await AsyncStorage.setItem('@locations', JSON.stringify(locations));
+      await AsyncStorage.setItem(locationsKey, JSON.stringify(locations));
     } catch (error) {
-      const value = await AsyncStorage.getItem('@locations');
-      locations = JSON.parse(value);
+      const value = await AsyncStorage.getItem(locationsKey);
+      locations = value ? JSON.parse(value) : [];
     }
 
     setState({

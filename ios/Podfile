@@ -1,19 +1,11 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, min_ios_version_supported
+ios_minimum = '15.0'
+platform :ios, ios_minimum
 prepare_react_native_project!
 
-# If you are using a `react-native-flipper` your iOS build will fail when `NO_FLIPPER=1` is set.
-# because `react-native-flipper` depends on (FlipperKit,...) that will be excluded
-#
-# To fix this you can also exclude `react-native-flipper` using a `react-native.config.js`
-# ```js
-# module.exports = {
-#   dependencies: {
-#     ...(process.env.NO_FLIPPER ? { 'react-native-flipper': { platforms: { ios: null } } } : {}),
-# ```
-flipper_config = ENV['NO_FLIPPER'] == "1" ? FlipperConfiguration.disabled : FlipperConfiguration.enabled
+project 'AdaptJust', 'Debug' => :debug, 'Release' => :release, 'Staging' => :release
 
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil
@@ -29,16 +21,10 @@ target 'AdaptJust' do
 
   use_react_native!(
     :path => config[:reactNativePath],
-    # Hermes is now enabled by default. Disable by setting this flag to false.
-    # Upcoming versions of React Native may rely on get_default_flags(), but
-    # we make it explicit here to aid in the React Native upgrade process.
-    :hermes_enabled => flags[:hermes_enabled],
+    # The Hermes binaries for this React Native line still import disk-space APIs.
+    :hermes_enabled => false,
     :fabric_enabled => flags[:fabric_enabled],
-    # Enables Flipper.
-    #
-    # Note that if you have use_frameworks! enabled, Flipper will not work and
-    # you should disable the next line.
-    :flipper_configuration => flipper_config,
+    :flipper_configuration => FlipperConfiguration.disabled,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
@@ -56,5 +42,16 @@ target 'AdaptJust' do
       :mac_catalyst_enabled => false
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
+
+    # Some older podspecs declare minimums below the range supported by Xcode.
+    installer.pods_project.targets.each do |pod_target|
+      pod_target.build_configurations.each do |configuration|
+        settings = configuration.build_settings
+        target = settings['IPHONEOS_DEPLOYMENT_TARGET']
+        if target.nil? || Gem::Version.new(target) < Gem::Version.new(ios_minimum)
+          settings['IPHONEOS_DEPLOYMENT_TARGET'] = ios_minimum
+        end
+      end
+    end
   end
 end

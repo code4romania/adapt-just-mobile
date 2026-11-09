@@ -8,6 +8,7 @@ import { ComplaintUtil } from '~/utils';
 import agencies from '~/constants/agencies';
 import useWithReducer from '~/hooks/use-with-reducer';
 import { getInstitutions } from '~/services/complaint-service';
+import { complaintDraftKey } from '~/utils/app-environment';
 
 const complaintState = {
   cnp: '',
@@ -138,7 +139,7 @@ export const ComplaintProvider = ({
     };
 
     await AsyncStorage.setItem(
-      '@complaint',
+      complaintDraftKey,
       JSON.stringify(data)
     );
 
@@ -159,7 +160,7 @@ export const ComplaintProvider = ({
     };
 
     await AsyncStorage.setItem(
-      '@complaint',
+      complaintDraftKey,
       JSON.stringify(data)
     );
 

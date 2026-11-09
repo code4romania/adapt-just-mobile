@@ -17,6 +17,7 @@ import {
 } from '~/assets/images';
 import useEmergency from '~/hooks/use-emergency';
 import { ComplaintContext } from '~/context/ComplaintContext';
+import { complaintDraftKey } from '~/utils/app-environment';
 
 import FormButton from '~/components/shared/buttons/FormButton';
 import ScreenTitle from '~/components/shared/screens/ScreenTitle';
@@ -46,7 +47,7 @@ const ComplaintVictimScreen = ({
 
   useEffect(() => {
     const getComplaint = async () => {
-      const complaint = await AsyncStorage.getItem('@complaint');
+      const complaint = await AsyncStorage.getItem(complaintDraftKey);
 
       if (!complaint) return;
       complaintRef.current = complaint;
